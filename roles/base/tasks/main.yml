@@ -1,0 +1,36 @@
+---
+- name: "Upgrade every package"
+  yum:
+    name:         "*"
+    state:        latest
+    update_cache: yes
+
+- name: "Docker: Install packages"
+  yum:
+    name:         "docker"
+    state:        present
+
+# Wish it was in Amazon AMI packages
+- name: "Docker: Install python lib"
+  pip:
+    name:   docker-py
+    state:  present
+
+- name: "Docker: start and enable service"
+  service:
+    name:     "docker"
+    state:    started
+    enabled:  yes
+
+- name: "Pull base images"
+  docker_image:
+    name:   "{{ item }}"
+    state:  present
+    tag:    latest
+  with_items:
+    - mesoscloud/zookeeper
+    - mesoscloud/mesos-slave
+    - mesoscloud/mesos-master
+    - mesoscloud/marathon
+    - traefik
+
