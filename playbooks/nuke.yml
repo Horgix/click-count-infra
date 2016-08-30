@@ -1,0 +1,34 @@
+---
+- name: "Nuke everything"
+  hosts: aws
+  tasks:
+    - name: "Nuke Marathon"
+      docker_container:
+        name:         marathon
+        state:        absent
+        keep_volumes: False
+      tags:
+        - marathon
+    - name: "Nuke Mesos master"
+      docker_container:
+        name:         mesos-master
+        state:        absent
+        keep_volumes: False
+      tags:
+        - mesos
+        - mesos-master
+    - name: "Nuke Mesos slave"
+      docker_container:
+        name:         mesos-slave
+        state:        absent
+        keep_volumes: False
+      tags:
+        - mesos
+        - mesos-slave
+    - name: "Nuke Zookeeper"
+      docker_container:
+        name:         zookeeper
+        state:        absent
+        keep_volumes: False
+      tags:
+        - zookeeper
