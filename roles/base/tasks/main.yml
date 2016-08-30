@@ -1,36 +1,27 @@
 ---
-- name: "Upgrade every package"
-  yum:
-    name:         "*"
-    state:        latest
-    update_cache: yes
+# ["ansible_default_ipv4"]["address"]
+- name: "Configure requirements"
+  include: requirements.yml
+  tags:
+    - requirements
 
-- name: "Docker: Install packages"
-  yum:
-    name:         "docker"
-    state:        present
+- name: "Configure Zookeeper"
+  include: zookeeper.yml
+  tags:
+    - zookeeper
+    - zk
 
-# Wish it was in Amazon AMI packages
-- name: "Docker: Install python lib"
-  pip:
-    name:   docker-py
-    state:  present
+- name: "Configure Mesos"
+  include: mesos.yml
+  tags:
+    - mesos
 
-- name: "Docker: start and enable service"
-  service:
-    name:     "docker"
-    state:    started
-    enabled:  yes
+- name: "Configure Marathon"
+  include: marathon.yml
+  tags:
+    - marathon
 
-- name: "Pull base images"
-  docker_image:
-    name:   "{{ item }}"
-    state:  present
-    tag:    latest
-  with_items:
-    - mesoscloud/zookeeper
-    - mesoscloud/mesos-slave
-    - mesoscloud/mesos-master
-    - mesoscloud/marathon
-    - traefik
-
+#- name: "Configure Traefik"
+#  include: traefik.yml
+#  tags:
+#    - traefik
