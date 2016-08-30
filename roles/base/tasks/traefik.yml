@@ -30,7 +30,7 @@
     image:    traefik
     state:    started
     recreate: yes
-    network_mode: bridge
+    network_mode: host
     ports:
       - "80:80"
       - "443:443"
