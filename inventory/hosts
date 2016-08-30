@@ -1,4 +1,4 @@
 [aws]
-ec2-52-209-80-131.eu-west-1.compute.amazonaws.com id=1
-ec2-52-51-50-9.eu-west-1.compute.amazonaws.com id=2
-ec2-52-210-84-207.eu-west-1.compute.amazonaws.com id=3
+ec2-52-209-80-131.eu-west-1.compute.amazonaws.com id=1  srvname=services.xebia.horgix.fr
+ec2-52-51-50-9.eu-west-1.compute.amazonaws.com id=2     srvname=integ.xebia.horgix.fr
+ec2-52-210-84-207.eu-west-1.compute.amazonaws.com id=3  srvname=prod.xebia.horgix.fr
