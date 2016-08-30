@@ -1,0 +1,46 @@
+---
+- name: "Mesos - Start slave"
+  docker_container:
+    name:     mesos-slave
+    image:    mesoscloud/mesos-slave
+    state:    started
+    network_mode: host
+    ports:
+      - "5051:5051"
+    volumes:
+      # AWS surprise; usually /sys/fs/cgroup
+      - "/cgroup:/cgroup"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    labels:
+      traefik.enable: "false"
+    env:
+      MESOS_HOSTNAME:       "{{ inventory_hostname }}"
+      MESOS_IP:             "{{ ansible_default_ipv4['address'] }}"
+      MESOS_LOG_DIR:        "/var/log/mesos"
+      MESOS_LOGGING_LEVEL:  "INFO"
+      MESOS_MASTER:         "zk://ip-172-31-9-253.eu-west-1.compute.internal:2181,ip-172-31-5-241.eu-west-1.compute.internal:2181,ip-172-31-4-250.eu-west-1.compute.internal:2181/mesos"
+      MESOS_RESOURCES:      '[{"name":"ports","type":"RANGES","ranges":{"range":[{"begin":80,"end":80},{"begin":443,"end":443},{"begin":31000,"end":32000}]}}]'
+  tags:
+    - mesos-slave
+
+- name: "Mesos - Start master"
+  docker_container:
+    name:     mesos-master
+    image:    mesoscloud/mesos-master
+    state:    started
+    network_mode: host
+    ports:
+      - "5050:5050"
+    labels:
+      traefik.enable: "false"
+    env:
+      MESOS_HOSTNAME:       "{{ inventory_hostname }}"
+      MESOS_IP:             "{{ ansible_default_ipv4['address'] }}"
+      MESOS_PORT:           "5050"
+      MESOS_LOG_DIR:        "/var/log/mesos"
+      MESOS_LOGGING_LEVEL:  "INFO"
+      MESOS_REGISTRY:       "in_memory"
+      MESOS_QUORUM:         "2"
+      MESOS_ZK:             "zk://ip-172-31-9-253.eu-west-1.compute.internal:2181,ip-172-31-5-241.eu-west-1.compute.internal:2181,ip-172-31-4-250.eu-west-1.compute.internal:2181/mesos"
+  tags:
+    - mesos-master
