@@ -34,10 +34,13 @@
     ports:
       - "5050:5050"
     labels:
-      traefik.enable: "false"
+      #traefik.enable:           "false"
+      traefik.port:           "5050"
+      traefik.backend:        "mesos"
+      traefik.frontend.rule:  "Host:mesos.{{ srvname }}"
     env:
       MESOS_HOSTNAME:       "{{ inventory_hostname }}"
-      MESOS_IP:             "{{ ansible_default_ipv4['address'] }}"
+      MESOS_IP:             "0.0.0.0"
       MESOS_PORT:           "5050"
       MESOS_LOG_DIR:        "/var/log/mesos"
       MESOS_LOGGING_LEVEL:  "INFO"
