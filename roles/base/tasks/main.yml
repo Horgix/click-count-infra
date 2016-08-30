@@ -21,7 +21,7 @@
   tags:
     - marathon
 
-#- name: "Configure Traefik"
-#  include: traefik.yml
-#  tags:
-#    - traefik
+- name: "Configure Traefik"
+  include: traefik.yml
+  tags:
+    - traefik
