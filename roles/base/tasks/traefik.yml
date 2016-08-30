@@ -1,0 +1,46 @@
+---
+- name: "Traefik - Create volumes directories"
+  file:
+    path:   /srv/traefik
+    state:  directory
+    owner:  root
+    group:  root
+    mode:   0755
+
+- name: "Traefik - Make sure acme.json exists"
+  file:
+    path:   /srv/traefik/acme.json
+    state:  touch
+    owner:  root
+    group:  root
+    mode:   0640
+  changed_when: False
+
+- name: "Traefik - configure"
+  template:
+    src:    traefik.toml.j2
+    dest:   /srv/traefik/traefik.toml
+    owner:  root
+    group:  root
+    mode:   0644
+
+- name: "Traefik - Start container"
+  docker_container:
+    name:     traefik
+    image:    traefik
+    state:    started
+    recreate: yes
+    network_mode: bridge
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8081:8080"
+    volumes:
+      - "/srv/traefik/traefik.toml:/etc/traefik/traefik.toml"
+      - "/srv/traefik/acme.json:/acme.json"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    labels:
+      #traefik.enable:           "false"
+      traefik.port:           "8081"
+      traefik.backend:        "traefik"
+      traefik.frontend.rule:  "Host:traefik.{{ srvname }}"
