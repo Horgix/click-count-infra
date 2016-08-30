@@ -2,6 +2,13 @@
 - name: "Nuke everything"
   hosts: aws
   tasks:
+    - name: "Nuke Traefik"
+      docker_container:
+        name:         traefik
+        state:        absent
+        keep_volumes: False
+      tags:
+        - traefik
     - name: "Nuke Marathon"
       docker_container:
         name:         marathon
