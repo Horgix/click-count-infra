@@ -21,14 +21,14 @@
     state:    started
     enabled:  yes
 
+# TODO : download image only on required hosts
 - name: "Docker - Pull base images"
   docker_image:
     name:   "{{ item }}"
     state:  present
     tag:    latest
   with_items:
-    - mesoscloud/zookeeper
-    - mesoscloud/mesos-slave
+    - horgix/zookeeper
     - mesoscloud/mesos-master
     - mesoscloud/marathon
     - traefik
