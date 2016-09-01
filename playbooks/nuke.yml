@@ -1,6 +1,6 @@
 ---
 - name: "Nuke everything"
-  hosts: aws
+  hosts: ec2
   tasks:
     - name: "Nuke Traefik"
       docker_container:
