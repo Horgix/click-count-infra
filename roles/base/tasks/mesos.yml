@@ -2,7 +2,7 @@
 - name: "Mesos - Start slave"
   docker_container:
     name:     mesos-slave
-    image:    mesoscloud/mesos-slave
+    image:    horgix/mesos-slave
     state:    started
     network_mode: host
     recreate:     yes
