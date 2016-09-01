@@ -2,7 +2,7 @@
 - name: "Zookeeper - Start"
   docker_container:
     name:         zookeeper
-    image:        mesoscloud/zookeeper
+    image:        horgix/zookeeper
     state:        started
     recreate:     yes
     network_mode: host
@@ -13,5 +13,5 @@
     labels:
       traefik.enable: "false"
     env:
-      MYID:     "{{ id }}"
-      SERVERS:  "ip-172-31-9-253.eu-west-1.compute.internal,ip-172-31-5-241.eu-west-1.compute.internal,ip-172-31-4-250.eu-west-1.compute.internal"
+      MYID:     "{{ ec2_tag_zkid }}"
+      SERVERS:  "{{ zk_nodes }}"
