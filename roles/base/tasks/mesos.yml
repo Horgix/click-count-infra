@@ -19,7 +19,7 @@
       MESOS_IP:             "{{ ansible_default_ipv4['address'] }}"
       MESOS_LOG_DIR:        "/var/log/mesos"
       MESOS_LOGGING_LEVEL:  "INFO"
-      MESOS_MASTER:         "zk://ip-172-31-9-253.eu-west-1.compute.internal:2181,ip-172-31-5-241.eu-west-1.compute.internal:2181,ip-172-31-4-250.eu-west-1.compute.internal:2181/mesos"
+      MESOS_MASTER:         "zk://{{ zk_nodes_with_port }}/mesos"
       MESOS_RESOURCES:      '[{"name":"ports","type":"RANGES","ranges":{"range":[{"begin":80,"end":80},{"begin":443,"end":443},{"begin":31000,"end":32000}]}}]'
   tags:
     - mesos-slave
@@ -46,6 +46,6 @@
       MESOS_LOGGING_LEVEL:  "INFO"
       MESOS_REGISTRY:       "in_memory"
       MESOS_QUORUM:         "2"
-      MESOS_ZK:             "zk://ip-172-31-9-253.eu-west-1.compute.internal:2181,ip-172-31-5-241.eu-west-1.compute.internal:2181,ip-172-31-4-250.eu-west-1.compute.internal:2181/mesos"
+      MESOS_ZK:             "zk://{{ zk_nodes_with_port }}/mesos"
   tags:
     - mesos-master
