@@ -33,3 +33,4 @@
     - mesoscloud/mesos-master
     - mesoscloud/marathon
     - traefik
+    - gitlab/gitlab-ce
