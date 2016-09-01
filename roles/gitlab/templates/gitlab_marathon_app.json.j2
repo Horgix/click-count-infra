@@ -1,0 +1,83 @@
+{
+  "id": "/gitlab",
+  "cmd": null,
+  "cpus": 0.2,
+  "mem": 256,
+  "disk": 0,
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/etc/gitlab",
+        "hostPath": "/srv/docker_volumes/gitlab/config",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/var/log/gitlab",
+        "hostPath": "/srv/docker_volumes/gitlab/logs",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/var/opt/gitlab",
+        "hostPath": "/srv/docker_volumes/gitlab/data",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "gitlab/gitlab-ce",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 0,
+          "servicePort": 10000,
+          "protocol": "tcp",
+          "name": "80",
+          "labels": {}
+        },
+        {
+          "containerPort": 22,
+          "hostPort": 0,
+          "servicePort": 10005,
+          "protocol": "tcp",
+          "name": "22",
+          "labels": {}
+        }
+      ],
+      "privileged": false,
+      "parameters": [],
+      "forcePullImage": false
+    }
+  },
+  "healthChecks": [
+    {
+      "path": "/",
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "labels": {
+    "traefik.enable": "true",
+    "traefik.backend": "gitlab",
+    "traefik.frontend.rule": "Host:gitlab.{{ domainname }}",
+    "traefik.portIndex": "0"
+  },
+  "portDefinitions": [
+    {
+      "port": 10000,
+      "protocol": "tcp",
+      "labels": {}
+    },
+    {
+      "port": 10005,
+      "protocol": "tcp",
+      "labels": {}
+    }
+  ]
+}
