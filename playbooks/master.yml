@@ -3,3 +3,6 @@
   hosts: ec2
   roles:
     - base
+  tags:
+    - base
+
