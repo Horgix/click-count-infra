@@ -29,6 +29,7 @@
     tag:    latest
   with_items:
     - horgix/zookeeper
+    - horgix/mesos-slave
     - mesoscloud/mesos-master
     - mesoscloud/marathon
     - traefik
