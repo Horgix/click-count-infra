@@ -43,4 +43,4 @@
       #traefik.enable:           "false"
       traefik.port:           "8081"
       traefik.backend:        "traefik"
-      traefik.frontend.rule:  "Host:traefik.{{ srvname }}"
+      traefik.frontend.rule:  "Host:traefik.{{ domainname }}"
