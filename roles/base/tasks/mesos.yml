@@ -21,6 +21,7 @@
       MESOS_LOGGING_LEVEL:  "INFO"
       MESOS_MASTER:         "zk://{{ zk_nodes_with_port }}/mesos"
       MESOS_RESOURCES:      '[{"name":"ports","type":"RANGES","ranges":{"range":[{"begin":80,"end":80},{"begin":443,"end":443},{"begin":31000,"end":32000}]}}]'
+      MESOS_ATTRIBUTES:     "type:{{ ec2_tag_type }}"
   tags:
     - mesos-slave
 
