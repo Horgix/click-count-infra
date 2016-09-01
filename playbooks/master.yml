@@ -6,3 +6,9 @@
   tags:
     - base
 
+- name: "Setup Gitlab"
+  hosts: svc
+  roles:
+    - gitlab
+  tags:
+    - gitlab
