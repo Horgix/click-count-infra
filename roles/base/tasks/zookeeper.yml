@@ -6,10 +6,10 @@
     state:        started
     recreate:     yes
     network_mode: host
-    #ports:
-    #  - "2181:2181"
-    #  - "2888:2888"
-    #  - "3888:3888"
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
     labels:
       traefik.enable: "false"
     env:
