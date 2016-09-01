@@ -15,9 +15,9 @@
       #traefik.enable:           "false"
       traefik.port:           "8080"
       traefik.backend:        "marathon"
-      traefik.frontend.rule:  "Host:marathon.{{ srvname }}"
+      traefik.frontend.rule:  "Host:marathon.{{ domainname }}"
     env:
-      MARATHON_HOSTNAME:          "{{ inventory_hostname }}"
+      MARATHON_HOSTNAME:          "marathon.{{ domainname }}"
       MARATHON_HTTP_ADDRESS:      "0.0.0.0"
       MARATHON_HTTP_CREDENTIALS:  "horgix:verysecure"
       MARATHON_ZK:                "zk://ip-172-31-9-253.eu-west-1.compute.internal:2181,ip-172-31-5-241.eu-west-1.compute.internal:2181,ip-172-31-4-250.eu-west-1.compute.internal:2181/marathon"
