@@ -1,5 +1,5 @@
 ---
 - name: "Base setup"
-  hosts: aws
+  hosts: ec2
   roles:
     - base
