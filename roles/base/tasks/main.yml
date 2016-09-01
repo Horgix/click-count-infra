@@ -1,4 +1,19 @@
 ---
+- name: "Set Zookeeper Nodes fact"
+  set_fact:
+  #zk_nodes: "{% for host in groups['ec2'] %}{% if host == ec2_tag_Name %}0.0.0.0{% else %}{{ hostvars[host]['ec2_private_ip_address'] }}{% endif %}{% if not loop.last %},{% endif %}{% endfor %}"
+    zk_nodes: "{% for host in groups['ec2'] %}{{ hostvars[host]['ec2_tag_zkid'] }}:{{ hostvars[host]['ec2_private_ip_address'] }}{% if not loop.last %},{% endif %}{% endfor %}"
+    zk_nodes_with_port: "{% for host in groups['ec2'] %}{{ hostvars[host]['ec2_private_dns_name'] }}:2181{% if not loop.last %},{% endif %}{% endfor %}"
+  tags:
+    - always
+
+- name: "Zookeeper nodes"
+  debug:
+    msg: "{{ zk_nodes }}"
+  tags:
+    - always
+    - debug
+
 # ["ansible_default_ipv4"]["address"]
 - name: "Configure requirements"
   include: requirements.yml
