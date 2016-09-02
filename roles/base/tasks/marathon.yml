@@ -17,7 +17,7 @@
       traefik.backend:        "marathon"
       traefik.frontend.rule:  "Host:marathon.{{ domainname }}"
     env:
-      MARATHON_HOSTNAME:          "marathon.{{ domainname }}"
+      MARATHON_HOSTNAME:          "{{ domainname }}"
       MARATHON_HTTP_ADDRESS:      "0.0.0.0"
       MARATHON_HTTP_CREDENTIALS:  "horgix:verysecure"
       MARATHON_ZK:                "zk://{{ zk_nodes_with_port }}/marathon"
