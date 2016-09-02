@@ -12,3 +12,10 @@
     - gitlab
   tags:
     - gitlab
+
+- name: "Setup Traefik"
+  hosts: svc
+  roles:
+    - traefik
+  tags:
+    - svctraefik
