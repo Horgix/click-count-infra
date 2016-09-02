@@ -40,3 +40,4 @@
   include: traefik.yml
   tags:
     - traefik
+  when: ec2_tag_type != "svc"
