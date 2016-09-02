@@ -25,6 +25,28 @@
       tags:
         - gitlab
 
+- name: "Nuke Traefik"
+  hosts: svc
+  tasks:
+    - name: "Nuke Traefik volumes"
+      file:
+        path:   "{{ item }}"
+        state:  absent
+      with_items:
+        - /srv/traefik-marathon
+      tags:
+        - svctraefik
+    - name: "Nuke Traefik"
+      uri:
+        url:          "http://{{ domainname }}:8080/v2/apps/traefik"
+        method:       DELETE
+        user:         horgix
+        password:     verysecure
+        status_code:  "100,200,404"
+        HEADER_Content-Type:  "application/json"
+      tags:
+        - svctraefik
+
 - name: "Nuke Base"
   hosts: ec2
   tasks:
