@@ -1,5 +1,6 @@
 # requirements
 
+pyapi-gitlab
 boto for ec2
 ansible 2.2 >
 
