@@ -58,6 +58,7 @@
     import_url:       "https://Horgix@bitbucket.org/Horgix/xebia-app.git"
     state:            present
 
+# TODO : do it earlier and use it on gitlab_ modules
 - name: "Get private token"
   uri:
     url:          "http://gitlab.{{ domainname }}/api/v3/session?login=root&password=verysecure"
@@ -73,3 +74,18 @@
   tags:
     - token
 
+- name: "Get runner token"
+  uri:
+    url:          "http://gitlab.{{ domainname }}/api/v3/projects/xebia%2Fclick-count"
+    method:       GET
+    status_code:  "100,200,201,204"
+    HEADER_PRIVATE-TOKEN:  "{{ private_token }}"
+  register: api_project
+  tags:
+    - token
+
+- name: "Set runners token"
+  set_fact:
+    runners_token:  "{{ api_project['json']['runners_token'] }}"
+  tags:
+    - token
