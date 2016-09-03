@@ -58,3 +58,18 @@
     import_url:       "https://Horgix@bitbucket.org/Horgix/xebia-app.git"
     state:            present
 
+- name: "Get private token"
+  uri:
+    url:          "http://gitlab.{{ domainname }}/api/v3/session?login=root&password=verysecure"
+    method:       POST
+    status_code:  "201"
+  register: api_session
+  tags:
+    - token
+
+- name: "Set private token"
+  set_fact:
+    private_token: "{{ api_session['json']['private_token'] }}"
+  tags:
+    - token
+
