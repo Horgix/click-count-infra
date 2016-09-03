@@ -31,3 +31,15 @@
     user:         horgix
     password:     verysecure
     HEADER_Content-Type:  "application/json"
+
+- name: "Create Gitlab Group"
+  delegate_to: 127.0.0.1
+  gitlab_group:
+    server_url:       "http://gitlab.svc.deploy.coffee"
+    #validate_certs:   true
+    login_user:       root
+    login_password:   verysecure
+    name:             xebia
+    path:             xebia
+    state:            present
+
