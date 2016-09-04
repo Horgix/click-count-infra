@@ -27,4 +27,4 @@
     port: 22
     timeout:  320
     state: started
-  with_items: newly_spawned.results
+  with_items: "{{ newly_spawned.results }}"
