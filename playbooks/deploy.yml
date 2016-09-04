@@ -1,0 +1,27 @@
+---
+- name: "Base setup"
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  # For archlinux
+  vars:
+    ansible_python_interpreter: python2
+  roles:
+    - deploy
+  post_tasks:
+    - meta: refresh_inventory
+  tags:
+    - deploy
+
+- name: "Route 53"
+  hosts: ec2
+  gather_facts: false
+  connection: local
+  # For archlinux
+  vars:
+    ansible_python_interpreter: python2
+  roles:
+    - route53
+  tags:
+    - route53
+    - r53
