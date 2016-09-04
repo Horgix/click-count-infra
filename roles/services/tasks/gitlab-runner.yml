@@ -31,4 +31,3 @@
     user:         horgix
     password:     verysecure
     HEADER_Content-Type:  "application/json"
-    HEADER_PRIVATE-TOKEN: "{{ gitlab_private_token }}"
