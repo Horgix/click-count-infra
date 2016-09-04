@@ -1,3 +1,5 @@
+domain_name:        "xebia.horgix.fr"
+instance_hostname:  "{{ ec2_tag_type }}.{{ domain_name }}"
 
 required_instances:
   - type: t2.micro
