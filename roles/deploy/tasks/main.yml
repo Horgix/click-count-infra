@@ -1,0 +1,6 @@
+---
+- name: "Spawn instances"
+  include: ec2.yml
+  tags:
+    - ec2
+    - spawn
