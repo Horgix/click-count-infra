@@ -1,1 +1,17 @@
-domainname: "{{ ec2_tag_type }}.deploy.coffee"
+
+required_instances:
+  - type: t2.micro
+    tags:
+      Name: services
+      type: svc
+      zkid: 1
+  - type: t2.micro
+    tags:
+      Name: staging
+      type: staging
+      zkid: 2
+  - type: m4.large
+    tags:
+      Name: production
+      type: prod
+      zkid: 3
