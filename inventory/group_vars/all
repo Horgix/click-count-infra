@@ -2,7 +2,7 @@ domain_name:        "xebia.horgix.fr"
 instance_hostname:  "{{ ec2_tag_type }}.{{ domain_name }}"
 
 required_instances:
-  - type: t2.micro
+  - type: m4.large
     tags:
       Name: services
       type: svc
@@ -12,7 +12,7 @@ required_instances:
       Name: staging
       type: staging
       zkid: 2
-  - type: m4.large
+  - type: t2.micro
     tags:
       Name: production
       type: prod
