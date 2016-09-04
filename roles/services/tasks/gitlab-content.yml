@@ -1,0 +1,40 @@
+---
+- name: "Create Gitlab Group"
+  delegate_to: 127.0.0.1
+  gitlab_group:
+    server_url:       "http://gitlab.{{ domain_name }}"
+    #validate_certs:   true
+    login_token:      "{{ gitlab_private_token }}"
+    name:             xebiafr
+    state:            present
+
+- name: "Create Gitlab User"
+  delegate_to: 127.0.0.1
+  gitlab_user:
+    server_url:       "http://gitlab.{{ domain_name }}"
+    #validate_certs:   true
+    login_token:      "{{ gitlab_private_token }}"
+    name:             Xebia Interview
+    username:         xebia
+    password:         verysecure
+    group:            xebiafr
+    access_level:     owner
+    email:            alexis.horgix.chotard+xebia@gmail.com
+    state:            present
+
+- name: "Create Gitlab Project in group Ansible"
+  delegate_to: 127.0.0.1
+  gitlab_project:
+    server_url:       "http://gitlab.{{ domain_name }}"
+    #validate_certs:   true
+    login_token:      "{{ gitlab_private_token }}"
+    name:             click-count
+    group:            xebiafr
+    description:      Click Count application
+    import_url:       "https://Horgix@bitbucket.org/Horgix/xebia-app.git"
+    state:            present
+
+
+    #    curl --request POST --header "PRIVATE_TOKEN: 9koXpg98eAheJpvBs5tK"
+    #    "https://gitlab.example.com/api/v3/projects/1/variables" --form
+    #    "key=NEW_VARIABLE" --form "value=new value"

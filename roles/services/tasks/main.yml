@@ -25,6 +25,7 @@
   tags:
     - gitlab
     - gitlab-runner
+    - gitlab-content
     - token
 
 - name: "Set GitLab private token as fact"
@@ -33,7 +34,14 @@
   tags:
     - gitlab
     - gitlab-runner
+    - gitlab-content
     - token
+
+- name: "Configure GitLab content"
+  include: gitlab-content.yml
+  tags:
+    - gitlab
+    - gitlab-content
 
 - name: "Configure GitLab Runner"
   include: gitlab-runner.yml

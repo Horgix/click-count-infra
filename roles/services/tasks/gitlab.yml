@@ -31,29 +31,3 @@
     user:         horgix
     password:     verysecure
     HEADER_Content-Type:  "application/json"
-
-- name: "Create Gitlab Group"
-  delegate_to: 127.0.0.1
-  gitlab_group:
-    server_url:       "http://gitlab.{{ domain_name }}"
-    #validate_certs:   true
-    login_user:       root
-    login_password:   verysecure
-    name:             xebia
-    path:             xebia
-    state:            present
-
-- name: "Create Gitlab Project in group Ansible"
-  delegate_to: 127.0.0.1
-  gitlab_project:
-    server_url:       "http://gitlab.{{ domain_name }}"
-    #validate_certs:   true
-    login_user:       root
-    login_password:   verysecure
-    name:             click-count
-    group:            xebia
-    issues_enabled:   true
-    wiki_enabled:     true
-    snippets_enabled: true
-    import_url:       "https://Horgix@bitbucket.org/Horgix/xebia-app.git"
-    state:            present
