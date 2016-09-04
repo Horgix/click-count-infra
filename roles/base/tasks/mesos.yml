@@ -15,7 +15,7 @@
     labels:
       traefik.enable: "false"
     env:
-      MESOS_HOSTNAME:       "{{ domainname }}"
+      MESOS_HOSTNAME:       "{{ instance_hostname }}"
       MESOS_IP:             "{{ ansible_default_ipv4['address'] }}"
       MESOS_LOG_DIR:        "/var/log/mesos"
       MESOS_LOGGING_LEVEL:  "INFO"
@@ -38,9 +38,9 @@
       #traefik.enable:           "false"
       traefik.port:           "5050"
       traefik.backend:        "mesos"
-      traefik.frontend.rule:  "Host:mesos.{{ domainname }}"
+      traefik.frontend.rule:  "Host:mesos.{{ instance_hostname }}"
     env:
-      MESOS_HOSTNAME:       "{{ domainname }}"
+      MESOS_HOSTNAME:       "{{ instance_hostname }}"
       MESOS_IP:             "0.0.0.0"
       MESOS_PORT:           "5050"
       MESOS_LOG_DIR:        "/var/log/mesos"
