@@ -6,16 +6,9 @@
   tags:
     - base
 
-- name: "Setup Gitlab"
-  hosts: svc
+- name: "Setup Services"
+  hosts: services
   roles:
-    - gitlab
+    - services
   tags:
-    - gitlab
-
-- name: "Setup Traefik"
-  hosts: svc
-  roles:
-    - traefik
-  tags:
-    - svctraefik
+    - services
