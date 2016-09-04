@@ -3,9 +3,13 @@
   "instances": 1,
   "cpus": 0.2,
   "mem": 512,
-  "env": {
-    "ZOOKEEPER_ADDRESS": "{{ zk_nodes_with_port }}"
-  },
+  "constraints": [
+    [
+      "type",
+      "CLUSTER",
+      "svc"
+    ]
+  ],
   "container": {
     "type": "DOCKER",
     "docker": {
@@ -20,6 +24,9 @@
         }
       ]
     }
+  },
+  "env": {
+    "ZOOKEEPER_ADDRESS": "{{ zk_nodes_with_port }}"
   },
   "healthChecks": [
     {
