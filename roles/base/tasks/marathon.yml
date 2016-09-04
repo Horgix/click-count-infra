@@ -4,7 +4,6 @@
     name:     marathon
     image:    mesoscloud/marathon
     state:    started
-    recreate: yes
     network_mode: host
     # CF /usr/bin/marathon, l.98 for the reason of this ulimit
     ulimits:

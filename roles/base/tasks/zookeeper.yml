@@ -4,7 +4,6 @@
     name:         zookeeper
     image:        horgix/zookeeper
     state:        started
-    recreate:     yes
     network_mode: host
     ports:
       - "2181:2181"

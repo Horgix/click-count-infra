@@ -5,7 +5,6 @@
     image:    horgix/mesos-slave
     state:    started
     network_mode: host
-    recreate:     yes
     ports:
       - "5051:5051"
     volumes:
@@ -31,7 +30,6 @@
     image:    mesoscloud/mesos-master
     state:    started
     network_mode: host
-    recreate:     yes
     ports:
       - "5050:5050"
     labels:
