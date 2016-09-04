@@ -1,6 +1,6 @@
 ---
 - name: "Nuke GitLab"
-  hosts: svc
+  hosts: services
   tasks:
     - name: "Nuke GitLab volumes"
       file:
@@ -16,7 +16,7 @@
         - gitlab
     - name: "Nuke GitLab"
       uri:
-        url:          "http://{{ domainname }}:8080/v2/apps/gitlab"
+        url:          "http://{{ instance_hostname }}:8080/v2/apps/gitlab"
         method:       DELETE
         user:         horgix
         password:     verysecure
@@ -26,7 +26,7 @@
         - gitlab
 
 - name: "Nuke Traefik"
-  hosts: svc
+  hosts: services
   tasks:
     - name: "Nuke Traefik volumes"
       file:
@@ -38,7 +38,7 @@
         - svctraefik
     - name: "Nuke Traefik"
       uri:
-        url:          "http://{{ domainname }}:8080/v2/apps/traefik"
+        url:          "http://{{ instance_hostname }}:8080/v2/apps/traefik"
         method:       DELETE
         user:         horgix
         password:     verysecure
