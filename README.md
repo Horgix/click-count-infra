@@ -1,13 +1,11 @@
 # requirements
 
-pyapi-gitlab
-boto for ec2
-ansible 2.2 >
+- python2
+- ansible > 2.2
+- pyapi-gitlab
+- boto
 
 # todo
-
-better IAM for ansible key (ec2 full atm)
-alpine
 
 gitlab runner unregister ?
 
@@ -48,6 +46,8 @@ How would someone go about automating this particular point ?
 
 fun : pass files to docker inside runners, because the volume
 
+fun : undocumented meta refresh_inventory
+
 # Improvements
 
 ## Zookeeper ID
@@ -71,3 +71,18 @@ Have to add a step that **always** run to clean /tmp gitlab build directories
 ## Mesos UI
 
 Maybe deploy a nicer Mesos UI ?
+
+## AWS Keys rights
+
+Currently, the aws key used to deploy this has ec2 and route53 full
+permissions, which could be restricted.
+
+## Security groups
+
+Security groups currently let everything from everywhere connect...
+
+## Docker images
+
+Use the ones based on Alpine !
+
+Still have to accept keys manually
