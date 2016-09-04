@@ -23,7 +23,7 @@
 
 - name: "Run Marathon app"
   uri:
-    url:          "http://{{ domainname }}:8080/v2/apps/gitlab"
+    url:          "http://{{ instance_hostname }}:8080/v2/apps/gitlab"
     method:       PUT
     body:         '{{ lookup("file", "/tmp/gitlab_marathon_app.json") }}'
     body_format:  json
@@ -35,7 +35,7 @@
 - name: "Create Gitlab Group"
   delegate_to: 127.0.0.1
   gitlab_group:
-    server_url:       "http://gitlab.svc.deploy.coffee"
+    server_url:       "http://gitlab.{{ domain_name }}"
     #validate_certs:   true
     login_user:       root
     login_password:   verysecure
@@ -46,7 +46,7 @@
 - name: "Create Gitlab Project in group Ansible"
   delegate_to: 127.0.0.1
   gitlab_project:
-    server_url:       "http://gitlab.svc.deploy.coffee"
+    server_url:       "http://gitlab.{{ domain_name }}"
     #validate_certs:   true
     login_user:       root
     login_password:   verysecure
@@ -57,35 +57,3 @@
     snippets_enabled: true
     import_url:       "https://Horgix@bitbucket.org/Horgix/xebia-app.git"
     state:            present
-
-# TODO : do it earlier and use it on gitlab_ modules
-- name: "Get private token"
-  uri:
-    url:          "http://gitlab.{{ domainname }}/api/v3/session?login=root&password=verysecure"
-    method:       POST
-    status_code:  "201"
-  register: api_session
-  tags:
-    - token
-
-- name: "Set private token"
-  set_fact:
-    private_token: "{{ api_session['json']['private_token'] }}"
-  tags:
-    - token
-
-- name: "Get runner token"
-  uri:
-    url:          "http://gitlab.{{ domainname }}/api/v3/projects/xebia%2Fclick-count"
-    method:       GET
-    status_code:  "100,200,201,204"
-    HEADER_PRIVATE-TOKEN:  "{{ private_token }}"
-  register: api_project
-  tags:
-    - token
-
-- name: "Set runners token"
-  set_fact:
-    runners_token:  "{{ api_project['json']['runners_token'] }}"
-  tags:
-    - token

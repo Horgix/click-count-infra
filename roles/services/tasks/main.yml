@@ -1,0 +1,41 @@
+---
+- name: "Configure MesosUI"
+  include: mesos-ui.yml
+  tags:
+    - mesos-ui
+    - mesosui
+
+- name: "Configure Traefik"
+  include: traefik.yml
+  tags:
+    - svctraefik
+
+- name: "Configure GitLab"
+  include: gitlab.yml
+  tags:
+    - gitlab
+
+# TODO : make identifiers variable
+- name: "Get GitLab private token"
+  uri:
+    url:          "http://gitlab.{{ domain_name }}/api/v3/session?login=root&password=verysecure"
+    method:       POST
+    status_code:  "201"
+  register: api_session
+  tags:
+    - gitlab
+    - gitlab-runner
+    - token
+
+- name: "Set GitLab private token as fact"
+  set_fact:
+    gitlab_private_token: "{{ api_session['json']['private_token'] }}"
+  tags:
+    - gitlab
+    - gitlab-runner
+    - token
+
+- name: "Configure GitLab Runner"
+  include: gitlab-runner.yml
+  tags:
+    - gitlab-runner

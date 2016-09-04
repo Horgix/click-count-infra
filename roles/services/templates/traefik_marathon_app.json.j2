@@ -1,7 +1,7 @@
 {
   "id": "/traefik",
   "cmd": null,
-  "cpus": 1,
+  "cpus": 0.2,
   "mem": 512,
   "disk": 0,
   "instances": 1,
@@ -70,7 +70,7 @@
   "labels": {
     "traefik.enable": "true",
     "traefik.backend": "traefik",
-    "traefik.frontend.rule": "Host:traefik.{{ domainname }}",
+    "traefik.frontend.rule": "Host:traefik.{{ domain_name }}",
     "traefik.portIndex": "1"
   },
   "upgradeStrategy": {

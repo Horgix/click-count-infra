@@ -1,0 +1,34 @@
+---
+- name: "GitLab Runner - Get runners token"
+  uri:
+    url:          "http://gitlab.{{ domain_name }}/api/v3/projects/xebia%2Fclick-count"
+    method:       GET
+    status_code:  "100,200,201,204"
+    HEADER_PRIVATE-TOKEN:  "{{ gitlab_private_token }}"
+  register: api_project
+  tags:
+    - token
+
+- name: "GitLab Runner - Set runners token as fact"
+  set_fact:
+    gitlab_runners_token:  "{{ api_project['json']['runners_token'] }}"
+  tags:
+    - token
+
+- name: "GitLab Runner - Generate Marathon JSON description"
+  template:
+    src:  gitlab_runner_marathon_app.json.j2
+    dest: /tmp/gitlab_runner_marathon_app.json
+  delegate_to: localhost
+
+- name: "Runner - Run Marathon app"
+  uri:
+    url:          "http://{{ instance_hostname }}:8080/v2/apps/gitlab-runner"
+    method:       PUT
+    body:         '{{ lookup("file", "/tmp/gitlab_runner_marathon_app.json") }}'
+    body_format:  json
+    status_code:  "100,200,201,204"
+    user:         horgix
+    password:     verysecure
+    HEADER_Content-Type:  "application/json"
+    HEADER_PRIVATE-TOKEN: "{{ gitlab_private_token }}"

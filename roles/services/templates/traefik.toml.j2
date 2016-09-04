@@ -234,7 +234,7 @@ endpoint = "unix:///var/run/docker.sock"
 #
 # Required
 #
-domain = "{{ domainname }}"
+domain = "{{ domain_name }}"
 
 # Enable watch docker changes
 #
@@ -275,7 +275,7 @@ watch = true
 #
 # Required
 #
-endpoint = "http://{{ domainname }}:8080"
+endpoint = "http://{{ domain_name }}:8080"
 
 # Enable watch Marathon changes
 #
@@ -288,7 +288,7 @@ watch = true
 #
 # Required
 #
-domain = "{{ domainname }}"
+domain = "{{ domain_name }}"
 
 # Override default configuration template. For advanced users :)
 #

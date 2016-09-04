@@ -63,7 +63,10 @@
   "labels": {
     "traefik.enable": "true",
     "traefik.backend": "gitlab",
-    "traefik.frontend.rule": "Host:gitlab.{{ domainname }}",
+    "traefik.frontend.rule": "Host:gitlab.{{ domain_name }}",
     "traefik.portIndex": "0"
+  },
+  "env": {
+    "GITLAB_OMNIBUS_CONFIG":  "external_url 'http://gitlab.{{ domain_name }}/';"
   }
 }

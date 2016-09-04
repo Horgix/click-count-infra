@@ -1,0 +1,42 @@
+{
+  "id": "/gitlab-runner",
+  "cmd": null,
+  "cpus": 0.5,
+  "mem": 512,
+  "disk": 0,
+  "instances": 1,
+  "constraints": [
+    [
+      "type",
+      "CLUSTER",
+      "svc"
+    ]
+  ],
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/var/run/docker.sock",
+        "hostPath": "/var/run/docker.sock",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "horgix/gitlab-runner",
+      "network": "BRIDGE",
+      "privileged": false,
+      "parameters": [],
+      "forcePullImage": false
+    }
+  },
+  "env": {
+    "CI_SERVER_URL":       "http://gitlab.{{ domain_name }}/ci",
+    "REGISTRATION_TOKEN":  "{{ gitlab_runners_token }}",
+    "RUNNER_NAME":         "FirstRunner",
+    "RUNNER_TAG_LIST":     "docker",
+    "RUNNER_EXECUTOR":     "docker",
+    "DOCKER_IMAGE":        "horgix/docker-make:latest",
+    "DOCKER_VOLUMES":       "/var/run/docker.sock:/var/run/docker.sock,/tmp:/tmp",
+    "REGISTER_NON_INTERACTIVE": "true"
+  }
+}
