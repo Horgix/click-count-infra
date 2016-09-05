@@ -23,11 +23,5 @@ Use the ones based on Alpine !
 
 ## Unregister runners
 
-## Get Docker hub credentials from env
-
-"{{ lookup('env','xxxx') }}"
-
-+ pass ?
-
 ## Add cache for maven
 

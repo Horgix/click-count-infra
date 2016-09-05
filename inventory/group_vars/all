@@ -23,5 +23,9 @@ gitlab:
   xebia_password: verysecure2
 
 marathon:
-  username:       pony
-  password:       unicorns
+  username: pony
+  password: unicorns
+
+docker_hub:
+  username: "{{ lookup('env', 'DOCKER_HUB_USERNAME') }}"
+  password: "{{ lookup('env', 'DOCKER_HUB_PASSWORD') }}"
