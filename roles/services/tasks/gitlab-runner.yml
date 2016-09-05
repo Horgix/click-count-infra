@@ -1,7 +1,7 @@
 ---
 - name: "GitLab Runner - Get runners token"
   uri:
-    url:          "http://gitlab.{{ domain_name }}/api/v3/projects/xebia%2Fclick-count"
+    url:          "http://gitlab.{{ domain_name }}/api/v3/projects/xebiafr%2Fclick-count"
     method:       GET
     status_code:  "100,200,201,204"
     HEADER_PRIVATE-TOKEN:  "{{ gitlab_private_token }}"
