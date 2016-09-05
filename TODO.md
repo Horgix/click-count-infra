@@ -1,6 +1,4 @@
-## Cleanup Gitlab CI builddir
-
-Have to add a step that **always** run to clean /tmp gitlab build directories
+# AWS
 
 ## AWS Keys rights
 
@@ -11,17 +9,23 @@ permissions, which could be restricted.
 
 Security groups currently let everything from everywhere connect...
 
+# Infra
+
 ## Docker images
 
 Use the ones based on Alpine !
 
 ## Still have to accept keys manually
 
-## Wait for Gitlab to be available before creating groups
-
 ## Ansible's gitlab_user module is bugged :(
 
 ## Unregister runners
 
+# CI
+
 ## Add cache for maven
+
+## Cleanup Gitlab CI builddir
+
+Have to add a step that **always** run to clean /tmp gitlab build directories
 
