@@ -102,3 +102,9 @@ Use the ones based on Alpine !
 ## Ansible's module is bugged :(
 
 ## Unregister runners
+
+## Get Docker hub credentials from env
+
+"{{ lookup('env','xxxx') }}"
+
++ pass ?
