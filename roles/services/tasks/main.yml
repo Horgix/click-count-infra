@@ -1,4 +1,14 @@
 ---
+- name: "Docker - Pull service images"
+  docker_image:
+    name:   "{{ item }}"
+    state:  present
+    tag:    latest
+  with_items:
+    - gitlab/gitlab-ce
+    - horgix/gitlab-runner
+    - traefik
+
 - name: "Configure MesosUI"
   include: mesos-ui.yml
   tags:
