@@ -57,6 +57,8 @@ The volume is from the host ! BUild dir, etc
 
 ## Undocumented meta refresh_inventory
 
+## Ansible's gitlab_user module is bugged :(
+
 # Improvements ideas
 
 ## Zookeeper ID
@@ -80,3 +82,17 @@ Since they don't listen for connection and directly connect to GitLab, there is
 no real way to check for its aliveness; something based on the health check
 type "command" which would hit GitLab API to detect if the runners is
 referenced as active or not would be possible, but currently not implemented.
+
+## Docker images based on Alpine
+
+Currently, this project is using the most possible "standard" images, mainly
+just using the "latest" tag. Reducing the global size of containers using ones
+based on Alpine would be nice, but would maybe have to be benchmarked before.
+
+## Make marathon json artifacts
+
+http://docs.gitlab.com/ce/user/project/builds/artifacts.html
+
+## Rolling upgrade without service interruption
+
+## GitLab Runners unregistering
