@@ -96,3 +96,5 @@ http://docs.gitlab.com/ce/user/project/builds/artifacts.html
 ## Rolling upgrade without service interruption
 
 ## GitLab Runners unregistering
+
+## Contribute a Marathon Ansible module

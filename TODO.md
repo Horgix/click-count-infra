@@ -14,3 +14,5 @@ Security groups currently let everything from everywhere connect...
 ## Still have to accept keys manually
 
 ## Work without Route 53
+
+## Run Traefik on each node
