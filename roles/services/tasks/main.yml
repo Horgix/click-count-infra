@@ -8,6 +8,8 @@
     - gitlab/gitlab-ce
     - horgix/gitlab-runner
     - traefik
+    - jetty
+    - maven
 
 - name: "Configure MesosUI"
   include: mesos-ui.yml
