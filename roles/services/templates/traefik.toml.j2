@@ -317,8 +317,8 @@ domain = "{{ domain_name }}"
 # Optional
 #
 [marathon.basic]
-httpBasicAuthUser = "horgix"
-httpBasicPassword = "verysecure"
+httpBasicAuthUser = "{{ marathon.username }}"
+httpBasicPassword = "{{ marathon.password }}"
 
 # TLS client configuration. https://golang.org/pkg/crypto/tls/#Config
 #

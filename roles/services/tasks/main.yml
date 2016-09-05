@@ -18,7 +18,7 @@
 # TODO : make identifiers variable
 - name: "Get GitLab private token"
   uri:
-    url:          "http://gitlab.{{ domain_name }}/api/v3/session?login=root&password=verysecure"
+    url:          "http://gitlab.{{ domain_name }}/api/v3/session?login=root&password={{ gitlab.root_password }}"
     method:       POST
     status_code:  "201"
   register: api_session

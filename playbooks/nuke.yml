@@ -18,8 +18,8 @@
       uri:
         url:          "http://{{ instance_hostname }}:8080/v2/apps/gitlab"
         method:       DELETE
-        user:         horgix
-        password:     verysecure
+        user:         "{{ marathon.username }}"
+        password:     "{{ marathon.password }}"
         status_code:  "100,200,404"
         HEADER_Content-Type:  "application/json"
       tags:
@@ -40,8 +40,8 @@
       uri:
         url:          "http://{{ instance_hostname }}:8080/v2/apps/traefik"
         method:       DELETE
-        user:         horgix
-        password:     verysecure
+        user:         "{{ marathon.username }}"
+        password:     "{{ marathon.password }}"
         status_code:  "100,200,404"
         HEADER_Content-Type:  "application/json"
       tags:

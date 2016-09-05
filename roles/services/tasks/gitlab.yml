@@ -28,6 +28,6 @@
     body:         '{{ lookup("file", "/tmp/gitlab_marathon_app.json") }}'
     body_format:  json
     status_code:  "100,200,201,204"
-    user:         horgix
-    password:     verysecure
+    user:         "{{ marathon.username }}"
+    password:     "{{ marathon.password }}"
     HEADER_Content-Type:  "application/json"

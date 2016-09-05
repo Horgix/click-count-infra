@@ -18,6 +18,6 @@
     env:
       MARATHON_HOSTNAME:          "{{ instance_hostname }}"
       MARATHON_HTTP_ADDRESS:      "0.0.0.0"
-      MARATHON_HTTP_CREDENTIALS:  "horgix:verysecure"
+      MARATHON_HTTP_CREDENTIALS:  "{{ marathon.username }}:{{ marathon.password }}"
       MARATHON_ZK:                "zk://{{ zk_nodes_with_port }}/marathon"
       MARATHON_MASTER:            "zk://{{ zk_nodes_with_port }}/mesos"

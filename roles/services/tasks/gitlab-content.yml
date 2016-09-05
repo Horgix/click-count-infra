@@ -16,7 +16,7 @@
     login_token:      "{{ gitlab_private_token }}"
     name:             Xebia Interview
     username:         xebia
-    password:         verysecure
+    password:         "{{ gitlab.xebia_password }}"
     group:            xebiafr
     access_level:     owner
     email:            alexis.horgix.chotard+xebia@gmail.com

@@ -17,3 +17,11 @@ required_instances:
       Name: production
       type: prod
       zkid: 3
+
+gitlab:
+  root_password:  verysecure2
+  xebia_password: verysecure2
+
+marathon:
+  username:       pony
+  password:       unicorns
