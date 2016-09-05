@@ -1,5 +1,5 @@
 domain_name:        "xebia.horgix.fr"
-instance_hostname:  "{{ ec2_tag_type }}.{{ domain_name }}"
+instance_hostname:  "{{ ec2_tag_Name }}.host.{{ domain_name }}"
 
 required_instances:
   - type: m4.large
