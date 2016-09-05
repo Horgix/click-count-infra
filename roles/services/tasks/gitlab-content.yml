@@ -22,7 +22,7 @@
     email:            alexis.horgix.chotard+xebia@gmail.com
     state:            present
 
-- name: "Create Gitlab Project in group Ansible"
+- name: "Create Gitlab Project"
   delegate_to: 127.0.0.1
   gitlab_project:
     server_url:       "http://gitlab.{{ domain_name }}"
@@ -34,7 +34,18 @@
     import_url:       "https://Horgix@bitbucket.org/Horgix/xebia-app.git"
     state:            present
 
-
-    #    curl --request POST --header "PRIVATE_TOKEN: 9koXpg98eAheJpvBs5tK"
-    #    "https://gitlab.example.com/api/v3/projects/1/variables" --form
-    #    "key=NEW_VARIABLE" --form "value=new value"
+- name: "Set variables"
+  uri:
+    url:          "http://gitlab.{{ domain_name }}/api/v3/projects/xebiafr%2Fclick-count/variables"
+    method:       POST
+    body:         "{{ item }}"
+    status_code:  "200,201,400"
+    HEADER_Content-Type: "application/x-www-form-urlencoded"
+    HEADER_PRIVATE-TOKEN:  "{{ gitlab_private_token }}"
+  with_items:
+    - "key=HUB_LOGIN&value={{ docker_hub.username }}"
+    - "key=HUB_PASSWORD&value={{ docker_hub.password }}"
+    - "key=MARATHON_URL&value=http://{{ instance_hostname }}:8080"
+    - "key=MARATHON_USERNAME&value={{ marathon.username }}"
+    - "key=MARATHON_PASSWORD&value={{ marathon.password }}"
+    - "key=STAGING_ENDPOINT&value=app.{{ instance_hostname }}"
