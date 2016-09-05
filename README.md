@@ -7,10 +7,6 @@ The following software/modules are required to be able to use this repo :
 - pyapi-gitlab (python module for GitLab API)
 - boto (python module for AWS API)
 
-# todo
-
-change template ? tmp already exists
-
 # Fun Parts
 
 ## Zookeeper SERVERS
@@ -23,31 +19,34 @@ SURPRISE UPDATE, thx mesos
 
 ## GitLab first login
 
-* Look in the code for what makes it ask...
-* End up discovering it can take something from env, undocumented
+When you first install GitLab, it automatically set a random password for the
+root account and force you to change it at your first connection. For a
+traditional use, it's not a big deal, but when you're trying to automate the
+GitLab spawn and configuration... it is painful.
 
-I'm automating the spawn of a Gitlab (gitlab/gitlab-ce Docker image) and the
-creation of some groups/users/projects for a demo platform.
+So, since there is absolutely no documentation on this usecase, I thought about
+these 3 ways to solve it :
 
-However, I can't find anything to automate the first "Reset your password" for
-the root account after installation.
-Any hint ? Things I've tried so far :
+1. Reset the password through the API. Except it doesn't have any endpoint for
+   this initial password, and we wouldn't be able to authenticate to the API
+   anyway
+2. Just POST the answer as if we did it from a browser. Except GitLab is based
+   on rails, which as built-in authenticity_token handling to avoid CSRF; so we
+   would have to GET the page first, then parse it, the POST the answer... no
+   way.
+3. Play with the assets/wrapper that is used as entrypoint/CMD of the docker
+   image
 
-1. API; doesn't seem to have any endpoint for this use case
-2. POST as if I was doing it from my browser; but the authenticity_token from
-   rails would force me to GET and parse the page, which I would like to avoid
-3. Playing with the assets/wrapper that is used as entrypoint/cmd of the docker
-   image, but then I found by getting the user in the gitlab-rails console that
-   it already as an encrypted_password and no field forcing a reset
+After investigating on this 3rd point, I finaly realized that it's possible to
+set the root password at installation through environment, which is documented
+nowhere ! See
+https://gitlab.com/gitlab-org/gitlab-ce/blob/master/db/fixtures/production/001_admin.rb
+for the code.
 
 ## GitLab CI runner token
 
 need a token, how to register ? Again, badly documented.
 Need to discover runners. End up hitting the API
-
-## GitLab Runner health checks
-
-They don't listen on anything :(
 
 Heureusement, le gitlab runner est en go et sait parser sa conf depuis l'env...
 juste à automatiser le register à la création :)
@@ -58,7 +57,7 @@ The volume is from the host ! BUild dir, etc
 
 ## Undocumented meta refresh_inventory
 
-# Improvements
+# Improvements ideas
 
 ## Zookeeper ID
 
@@ -74,37 +73,10 @@ GitLab can provide a Docker private registry. It would be really nice to use
 it; however, it has not been integrated in this project/demo, as it requires
 passing SSL certificates to it, which are currently only known to Traefik.
 
-## Cleanup Gitlab CI builddir
+## GitLab Runner health checks
 
-Have to add a step that **always** run to clean /tmp gitlab build directories
-
-## AWS Keys rights
-
-Currently, the aws key used to deploy this has ec2 and route53 full
-permissions, which could be restricted.
-
-## Security groups
-
-Security groups currently let everything from everywhere connect...
-
-## Docker images
-
-Use the ones based on Alpine !
-
-## Still have to accept keys manually
-
-## Pull images only when required
-
-## Wait for Gitlab to be available before creating groups
-
-## Marathon apps : check for latest
-
-## Ansible's module is bugged :(
-
-## Unregister runners
-
-## Get Docker hub credentials from env
-
-"{{ lookup('env','xxxx') }}"
-
-+ pass ?
+Currently, there is no health chekcs on Marathon side for GitLab runners.
+Since they don't listen for connection and directly connect to GitLab, there is
+no real way to check for its aliveness; something based on the health check
+type "command" which would hit GitLab API to detect if the runners is
+referenced as active or not would be possible, but currently not implemented.
