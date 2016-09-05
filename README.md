@@ -70,17 +70,9 @@ discover its ID.
 
 It would be nice to use the built-in Gitlab Docker registry
 
-## Gitlab CI variables
-
-Could be cool to define Gitlab CI variables from the API
-
 ## Cleanup Gitlab CI builddir
 
 Have to add a step that **always** run to clean /tmp gitlab build directories
-
-## Mesos UI
-
-Maybe deploy a nicer Mesos UI ?
 
 ## AWS Keys rights
 
@@ -97,8 +89,6 @@ Use the ones based on Alpine !
 
 Still have to accept keys manually
 
-## Marathon force deployment
-
 ## Constraints everywhere
 
 ## Pull images only when required
@@ -108,3 +98,7 @@ Still have to accept keys manually
 ## Marathon apps : check for latest
 
 ## GitLab : create a Xebia account
+
+## Gitlab : make password variable
+
+## Ansible's module is bugged :(
