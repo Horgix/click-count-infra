@@ -25,6 +25,7 @@ gitlab:
 marathon:
   username: pony
   password: unicorns
+  endpoint: "http://{{ domain_name }}:8080"
 
 docker_hub:
   username: "{{ lookup('env', 'DOCKER_HUB_USERNAME') }}"

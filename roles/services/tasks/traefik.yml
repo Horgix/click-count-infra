@@ -32,7 +32,7 @@
 
 - name: "Run Marathon app"
   uri:
-    url:          "http://{{ instance_hostname }}:8080/v2/apps/traefik"
+    url:          "{{ marathon.endpoint }}/v2/apps/traefik"
     method:       PUT
     body:         '{{ lookup("file", "/tmp/traefik_marathon_app.json") }}'
     body_format:  json

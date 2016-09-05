@@ -7,7 +7,7 @@
 
 - name: "MesosUI - Run Marathon app"
   uri:
-    url:          "http://{{ instance_hostname }}:8080/v2/apps/mesosui"
+    url:          "{{ marathon.endpoint }}/v2/apps/mesosui"
     method:       PUT
     body:         '{{ lookup("file", "/tmp/mesosui_marathon_app.json") }}'
     body_format:  json

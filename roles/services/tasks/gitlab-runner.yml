@@ -23,7 +23,7 @@
 
 - name: "Runner - Run Marathon app"
   uri:
-    url:          "http://{{ instance_hostname }}:8080/v2/apps/gitlab-runner"
+    url:          "{{ marathon.endpoint }}/v2/apps/gitlab-runner"
     method:       PUT
     body:         '{{ lookup("file", "/tmp/gitlab_runner_marathon_app.json") }}'
     body_format:  json

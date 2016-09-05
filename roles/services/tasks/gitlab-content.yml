@@ -45,7 +45,7 @@
   with_items:
     - "key=HUB_LOGIN&value={{ docker_hub.username }}"
     - "key=HUB_PASSWORD&value={{ docker_hub.password }}"
-    - "key=MARATHON_URL&value=http://{{ instance_hostname }}:8080"
+    - "key=MARATHON_URL&value={{ marathon.endpoint }}"
     - "key=MARATHON_USERNAME&value={{ marathon.username }}"
     - "key=MARATHON_PASSWORD&value={{ marathon.password }}"
     - "key=STAGING_ENDPOINT&value=app.{{ instance_hostname }}"
