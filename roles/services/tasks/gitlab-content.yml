@@ -49,3 +49,4 @@
     - "key=MARATHON_USERNAME&value={{ marathon.username }}"
     - "key=MARATHON_PASSWORD&value={{ marathon.password }}"
     - "key=STAGING_ENDPOINT&value=app.{{ instance_hostname }}"
+    - "key=PRODUCTION_ENDPOINT&value=appprd.{{ instance_hostname }}"
