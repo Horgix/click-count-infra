@@ -29,3 +29,6 @@ marathon:
 docker_hub:
   username: "{{ lookup('env', 'DOCKER_HUB_USERNAME') }}"
   password: "{{ lookup('env', 'DOCKER_HUB_PASSWORD') }}"
+
+staging_redis:    "52.58.227.209"
+production_redis: "52.59.156.110"
