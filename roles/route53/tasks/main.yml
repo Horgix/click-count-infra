@@ -1,27 +1,41 @@
 ---
-- name: "Add Route 53 records"
+- name: "Add Route 53 host records"
   delegate_to: "127.0.0.1"
   connection: local
   route53:
-    command: create
-    zone: xebia.horgix.fr
-    record: "{{ ec2_tag_type }}.xebia.horgix.fr"
-    type: CNAME
-    ttl: 60
-    value: "{{ ec2_public_dns_name }}"
+    command:  create
+    zone:     "{{ domain_name }}"
+    record:   "{{ ec2_tag_Name }}.host.{{ domain_name }}"
+    type:     CNAME
+    ttl:      60
+    value:    "{{ ec2_public_dns_name }}"
+    wait:     yes
     overwrite: yes
-    wait: yes
 
-- name: "Add Route 53 records"
+- name: "Add Route 53 services records"
   delegate_to: "127.0.0.1"
   connection: local
   route53:
-    command: create
-    zone: xebia.horgix.fr
-    record: "*.xebia.horgix.fr"
-    type: CNAME
-    ttl: 60
-    value: "svc.xebia.horgix.fr"
+    command:  create
+    zone:     "{{ domain_name }}"
+    record:   "*.{{ domain_name }}"
+    type:     CNAME
+    ttl:      60
+    value:    "svc.host.{{ domain_name }}"
+    wait:     yes
     overwrite: yes
-    wait: yes
+  when: ec2_tag_type == "svc"
+
+- name: "Add Route 53 main record"
+  delegate_to: "127.0.0.1"
+  connection: local
+  route53:
+    command:  create
+    zone:     "{{ domain_name }}"
+    record:   "{{ domain_name }}"
+    type:     A
+    ttl:      60
+    value:    "{{ ec2_ip_address }}"
+    wait:     yes
+    overwrite: yes
   when: ec2_tag_type == "svc"
