@@ -31,5 +31,9 @@ docker_hub:
   username: "{{ lookup('env', 'DOCKER_HUB_USERNAME') }}"
   password: "{{ lookup('env', 'DOCKER_HUB_PASSWORD') }}"
 
-staging_redis:    "52.58.227.209"
-production_redis: "52.59.156.110"
+staging:
+  redis:    "52.58.227.209"
+  endpoint: "staging.{{ domain_name }}"
+production:
+  redis:    "52.59.156.110"
+  endpoint: "prod.{{ domain_name }}"
