@@ -10,6 +10,7 @@
     - deploy
   post_tasks:
     - meta: refresh_inventory
+      # TODO : refresh boto cache
   tags:
     - deploy
 
