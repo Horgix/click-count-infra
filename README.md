@@ -1,17 +1,17 @@
-# requirements
+# Requirements
 
+The following software/modules are required to be able to use this repo :
+
+- ansible (2.2, latest)
 - python2
-- ansible > 2.2
-- pyapi-gitlab
-- boto
+- pyapi-gitlab (python module for GitLab API)
+- boto (python module for AWS API)
 
 # todo
 
-gitlab runner unregister ?
-
 change template ? tmp already exists
 
-# fun parts
+# Fun Parts
 
 ## Zookeeper SERVERS
 
@@ -66,9 +66,13 @@ Currently, Zookeeper IDs are taken from the tag "zkid" on the instances, which
 will be kind of a pain to scale. It would be better if each Zookeeper could
 discover its ID.
 
-## Docker Registry
+## Use Gitlab Container Registry
 
-It would be nice to use the built-in Gitlab Docker registry
+Since the [8.8
+release](https://about.gitlab.com/2016/05/23/gitlab-container-registry/),
+GitLab can provide a Docker private registry. It would be really nice to use
+it; however, it has not been integrated in this project/demo, as it requires
+passing SSL certificates to it, which are currently only known to Traefik.
 
 ## Cleanup Gitlab CI builddir
 
@@ -87,9 +91,7 @@ Security groups currently let everything from everywhere connect...
 
 Use the ones based on Alpine !
 
-Still have to accept keys manually
-
-## Constraints everywhere
+## Still have to accept keys manually
 
 ## Pull images only when required
 
@@ -97,8 +99,6 @@ Still have to accept keys manually
 
 ## Marathon apps : check for latest
 
-## GitLab : create a Xebia account
-
-## Gitlab : make password variable
-
 ## Ansible's module is bugged :(
+
+## Unregister runners
