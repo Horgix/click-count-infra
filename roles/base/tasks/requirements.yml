@@ -5,7 +5,7 @@
     state:        latest
     update_cache: yes
 
-- name: "Docker - Install packages"
+- name: "Docker - Install package"
   yum:
     name:         "docker"
     state:        present
@@ -32,5 +32,4 @@
     - horgix/mesos-slave
     - mesoscloud/mesos-master
     - mesoscloud/marathon
-    - traefik
-    - gitlab/gitlab-ce
+    #- traefik
