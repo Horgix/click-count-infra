@@ -30,13 +30,19 @@
   },
   "healthChecks": [
     {
-      "gracePeriodSeconds": 120,
-      "intervalSeconds": 15,
-      "maxConsecutiveFailures": 10,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "maxConsecutiveFailures": 3,
       "path": "/",
       "portIndex": 0,
       "protocol": "HTTP",
-      "timeoutSeconds": 5
-    }
-  ]
+      "timeoutSeconds": 20
+    },
+  ],
+  "labels": {
+    "traefik.enable": "true",
+    "traefik.backend": "mesosui",
+    "traefik.frontend.rule": "Host:cluster.{{ domain_name }}",
+    "traefik.portIndex": "0"
+  }
 }
