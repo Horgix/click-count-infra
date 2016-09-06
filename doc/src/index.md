@@ -7,6 +7,8 @@ The following software/modules are required to be able to use this repo :
 - pyapi-gitlab (python module for GitLab API)
 - boto (python module for AWS API)
 
+# Requirements
+
 - An AWS key with the following policies:
     - AmazonEC2FullAccess
     - AmazonRoute53FullAccess

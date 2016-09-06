@@ -1,0 +1,3 @@
+site_name: Click Count infrastructure documentation
+docs_dir: src
+theme: mkdocs
