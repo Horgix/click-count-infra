@@ -1,5 +1,7 @@
 domain_name:        "xebia.horgix.fr"
 instance_hostname:  "{{ ec2_tag_Name }}.host.{{ domain_name }}"
+vpc_subnet_id:      "subnet-3adebc5e"
+vpc_id:             "vpc-ab1595cf"
 
 required_instances:
   - type: m4.large
