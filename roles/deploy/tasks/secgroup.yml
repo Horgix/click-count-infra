@@ -1,0 +1,10 @@
+---
+- name: "EC2 - Create security group"
+  ec2_group:
+    name:         "Click-Count"
+    description:  "Security group for the Click-Count infrastructure"
+    #vpc_id:       "{{ vpc_ic }}"
+    region: eu-west-1
+    rules:
+      - proto: all
+        cidr_ip: 0.0.0.0/0
