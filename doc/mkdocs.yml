@@ -1,3 +1,3 @@
-site_name: Click Count infrastructure documentation
+site_name: Click-Count infrastructure
 docs_dir: src
 theme: mkdocs

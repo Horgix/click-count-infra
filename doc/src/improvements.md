@@ -1,3 +1,9 @@
+# Improvements ?
+
+Since this project as been made from scratch in a week, there is a room for a
+lot of improvements. This is a list of some ideas that could be implemented
+with a bit more time and depending on the needs.
+
 # Zookeeper ID
 
 Currently, Zookeeper IDs are taken from the tag "zkid" on the instances, which

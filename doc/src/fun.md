@@ -1,3 +1,6 @@
+This project has been really fun, and I thought I would detail some of the
+surprising and intersting points I encountered during this week.
+
 # Zookeeper SERVERS
 
 It uses the order in which they are given...
