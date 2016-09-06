@@ -1,4 +1,10 @@
 ---
+- name: "Configure security group"
+  include: secgroup.yml
+  tags:
+    - ec2
+    - secgroup
+
 - name: "Spawn instances"
   include: ec2.yml
   tags:
