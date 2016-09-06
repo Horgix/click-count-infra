@@ -1,3 +1,5 @@
+make:: deploy base services
+
 deploy::
 	ansible-playbook playbooks/deploy.yml -t deploy
 	./inventory/ec2.py --refresh-cache > /dev/null
