@@ -15,17 +15,11 @@
   tags:
     - dirs
 
-- name: "Generate Marathon JSON description"
-  template:
-    src:  gitlab_marathon_app.json.j2
-    dest: /tmp/gitlab_marathon_app.json
-  delegate_to: localhost
-
 - name: "Run Marathon app"
   uri:
     url:          "{{ marathon.endpoint }}/v2/apps/gitlab"
     method:       PUT
-    body:         '{{ lookup("file", "/tmp/gitlab_marathon_app.json") }}'
+    body:         '{{ lookup("template", "gitlab_marathon_app.json.j2") }}'
     body_format:  json
     status_code:  "100,200,201,204"
     user:         "{{ marathon.username }}"

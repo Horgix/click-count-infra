@@ -24,17 +24,11 @@
     group:  root
     mode:   0644
 
-- name: "Generate Marathon JSON description"
-  template:
-    src:  traefik_marathon_app.json.j2
-    dest: /tmp/traefik_marathon_app.json
-  delegate_to: localhost
-
 - name: "Run Marathon app"
   uri:
     url:          "{{ marathon.endpoint }}/v2/apps/traefik"
     method:       PUT
-    body:         '{{ lookup("file", "/tmp/traefik_marathon_app.json") }}'
+    body:         '{{ lookup("template", "traefik_marathon_app.json.j2") }}'
     body_format:  json
     status_code:  "100,200,201,204"
     user:         "{{ marathon.username }}"
