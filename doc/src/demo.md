@@ -7,6 +7,7 @@ here forever since it's running on AWS with my own money.
 - [GitLab](https://gitlab.deploy.coffee); credentials: xebia/verysecure
 - [Traefik](https://traefik.deploy.coffee)
 - [Mesos UI](https://cluster.deploy.coffee)
+- [Count-Click CI Pipeline](https://gitlab.deploy.coffee/xebiafr/click-count/pipelines)
 - [This documentation](https://clickcount.horgix.fr)
 
 # Example run
