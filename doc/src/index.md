@@ -17,8 +17,8 @@ following properties:
 - Deployed with Ansible
 - Based on AWS EC2
 - Running **entirely** on Docker
-- Using Zookeeper and Mesos for resources management
-- Using Marathon to deploy and orchestrate services and the application itself
+- Using Zookeeper, Mesos and Marathon to deploy and orchestrate services and
+  the application itself
 
 The EC2 part can of course be replaced by any other IAAS provider, may it be
 public or private, admitting some adaptations.
@@ -27,17 +27,23 @@ public or private, admitting some adaptations.
 
 ## On your machine
 
+You will need the AWS key with the privilege described in the ["AWS
+side"](index.md#aws-side) part at this path : `~/.ssh/ansible-click-count.pem`
+
 The following software/modules are required to be able to use this repo:
 
 - Ansible (2.2, latest)
 - Python 2.7 (Ansible sadly doesn't work with Python 3)
 - pyapi-gitlab (python module for GitLab API)
 - boto (python module for AWS API)
-- the private ssh key with the privilege described in the "AWS side" part
+
+**If you don't want to install all of these, it's fine; there is already a
+[Docker image](https://hub.docker.com/r/horgix/ansible-aws-gitlab/) packaging
+them right there for you so just make sure you have the docker daemon running**
 
 ## AWS side
 
-Theses parts are also required on AWS side :
+Theses parts are also required on AWS side:
 
 - An AWS user with the following policies:
     - AdministratorAccess
@@ -66,3 +72,7 @@ Theses parts are also required on AWS side :
 - The application [click-count](https://github.com/Horgix/click-count-app) is
   deployed, depending on the targeted environment, on the staging and
   production nodes
+
+# How it works
+
+![Steps](images/steps.png)

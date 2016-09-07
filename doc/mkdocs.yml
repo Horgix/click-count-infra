@@ -1,3 +1,9 @@
 site_name: Click-Count infrastructure
 docs_dir: src
 theme: mkdocs
+pages:
+  - Home: index.md
+  - How-To: howto.md
+  - Demo: demo.md
+  - Improvements ideas: improvements.md
+  - Fun parts: fun.md

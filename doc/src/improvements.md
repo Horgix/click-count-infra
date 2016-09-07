@@ -2,13 +2,13 @@
 lot of improvements. This is a list of some ideas that could be implemented
 with a bit more time and depending on the needs.**
 
-# Zookeeper IDs
+## Zookeeper IDs
 
 Currently, Zookeeper IDs are taken from the tag `zkid` on the instances, which
 will be kind of a pain to handle if we introduce autoscaling of the
 infrastructure. It would be better if each Zookeeper could discover its ID.
 
-# Gitlab Container Registry
+## Gitlab Container Registry
 
 Since the [8.8
 release](https://about.gitlab.com/2016/05/23/gitlab-container-registry/),
@@ -16,7 +16,7 @@ GitLab can provide a Docker private registry. It would be really nice to use
 it; however, it has not been integrated in this project/demo, as it requires
 passing SSL certificates to it, which are currently only known to Traefik.
 
-# GitLab Runner health checks
+## GitLab Runner health checks
 
 Currently, there is no health checks on Marathon side for GitLab runners.
 Since they don't listen for connections and directly connect to GitLab, there
@@ -24,13 +24,13 @@ is no easy way to check for its aliveness; something based on the health check
 type "command" which would hit GitLab API to detect if the runners is
 referenced as active or not would be possible, but currently not implemented.
 
-# Docker images based on Alpine
+## Docker images based on Alpine
 
 Currently, this project is using the most possible "standard" images, mainly
 just using the "latest" tag. Reducing the global size of containers using ones
 based on Alpine would be nice, but would maybe have to be benchmarked before.
 
-# Rolling upgrade without service interruption
+## Rolling upgrade without service interruption
 
 Currently, if we try to run the app with less than 300MB of memory, it simply
 ends up being killed by the oom killer:
@@ -59,17 +59,17 @@ risk of anyway having one or both instances of the application killed by the
 oom killer. The best case, of course, would be to run on something better than
 t2.micro instances, or having more of them.
 
-# GitLab Runners autoscaling and deregistering
+## GitLab Runners autoscaling and deregistering
 
-TODO
+Currently not implemented but would be nice to have.
 
-# Contribute a Marathon Ansible module
+## Contribute a Marathon Ansible module
 
 The lack of an Ansible module dedicated to running Marathon applications forces
 to use the `uri` module. It would be better and cleaner to have a dedicated
 module for Ansible, which could probably be created easily.
 
-# Tailor needed AWS key policies
+## Tailor needed AWS key policies
 
 Currently, the required policies listed for the AWS user are the following :
 
@@ -79,28 +79,34 @@ Currently, the required policies listed for the AWS user are the following :
 
 It could probably be restricted a bit more.
 
-# Improve security groups
+## Improve security groups
 
-- 80
-- 2888
-- 8080
-- 31000 - 32000
-- 5050
-- 22
-- 3888
-- 2181
-- 443
+Currently, the security groups are probably the worst part of this project.
+The one created by Ansible allow everything, both inbound and outbound.
+
+I had a first try with the following opened ports, but still had issues with
+Zookeeper so I postponed that to focus on the rest of this project.
+
+- 80 / 443 : HTTP(S)
+- 2888 / 3888 / 2181 : Zookeeper
+- 8080 : Marathon
+- 31000 - 32000 : Mesos Docker containers
+- 5050 : Mesos
+- 22 : SSH
 - ICMP
 
-# Auto accept host ecdsa keys / host key checking
+## Discover host keys
 
+Currently, the host key checking is disabled in Ansible's configuration to
+allow running on newly spawned instances without having to confirm anything. It
+would be better to discover these keys.
 
-
-# Work without Route 53
+## Work without Route 53
 
 To allow people to test this infrastructure more easily, it would be nice if it
 didn't depend on some of the records like `gitlab.<domain>`.
 
-# Run Traefik on each node
+## Tests...
 
-# Tests...
+A real test step in the CI Pipeline would be a must have in a real usecase,
+since until know I focused on the delivery part.

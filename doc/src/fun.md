@@ -100,17 +100,11 @@ I think I might submit a PR on the documentation to add this point.
 
 # GitLab CI runner token
 
-need a token, how to register ? Again, badly documented.
-Need to discover runners. End up hitting the API
+GitLab CI Runners need a token to register themselves on GitLab. However, there
+is absolutely no way to discover this token, so I ended up doing it through the
+GitLab API and then feeding it by environment variables to the GitLab Runner
+Docker image.
 
-Heureusement, le gitlab runner est en go et sait parser sa conf depuis l'env...
-juste à automatiser le register à la création :)
-
-# Pass files to docker inside runners
-
-The volume is from the host ! BUild dir, etc
-
-# Undocumented meta refresh_inventory
-
-# Ansible's gitlab_user module is bugged :(
-
+The Docker image is also not made for autoregistering so I quickly [implemented
+it](https://github.com/Horgix/dockerfiles/tree/master/gitlab-runner) and will
+probably suggest it as an improvement to the official gitlab-runner image.

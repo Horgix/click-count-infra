@@ -1,10 +1,31 @@
+# 4 steps to rule them all
+
+Ideally, you should be able to have the infrastructure to start building in
+5min, and totally built after 20min (15min for Ansible to run everything)
+
+- Make sure to have your AWS key in `~/.ssh/ansible-click-count.pem`
+- `source ./init_credentials.sh` or export the environment variables by hand
+- Tweak what you want in `inventory/groups_vars/all`, probably:
+    - `domain_name`
+    - `vpc_subnet_id`
+    - `vpc_id`
+- Run `make docker` ; the image pull will be long, and the Ansible run too, but
+  you should be able to grab a coffee while it runs.
+
 # Configuration
 
-## From docker or host ?
+Before taking the time to configure anything, make sure you meet the
+[requirements announced on the home page](index.md#requirements).
+
+## Using docker
+
+If you decided to use the "ansible-aws-gitlab" docker image which provides
+everything, you should be ok with the above 4 steps instructions.
 
 ## Ansible python interpreter
 
-If you're not on Archlinux, you might want to comment lines 7-8 and 22-23 in
+If you decided to run Ansible from your machine, and if you're not on
+Archlinux, you might want to comment lines 7-8 and 22-23 in
 playbooks/deploy.yml:
 
   vars:
@@ -21,9 +42,10 @@ To be able to do its job, this project require a login/password for 2 things :
 - Docker Hub
 
 You have to provide them as environment variable; the script
-`init_credentials.sh` can also be used to load them from [`pass`](TODO) (if you
-don't know what it is, I invite you to try it, it's a really simple way to
-store passwords, based on GPG, git, and tree).
+`init_credentials.sh` can also be used to load them from
+[`pass`](https://git.zx2c4.com/password-store/) (if you don't know what it is,
+I invite you to try it, it's a really simple way to store passwords, based on
+GPG, git, and tree).
 
 ### AWS
 
@@ -40,14 +62,25 @@ store passwords, based on GPG, git, and tree).
 - AWS\_SECRET\_ACCESS\_KEY
 
 You can also export them by running `init_credentials.sh` if they are stored in
-pass under `xebia/aws/ansible-key-id` and `xebia/aws/ansible-key-secret`
+pass under `xebia/aws/ansible-key-id` and `xebia/aws/ansible-key-secret`.
 
 ### Docker Hub
 
 #### Why is it needed ?
 
-The GitLab CI `build` step builds a Docker image locally and then push it to
-the [Docker Hub](TODO) using `docker login` then BLABLA
+The GitLab CI `build` step builds a Docker image locally and then pushes it to
+the [Docker Hub](https://hub.docker.com/) using `docker login` then `docker
+push`.
+
+#### What to define
+
+2 environment variable are required :
+
+- DOCKER\_HUB\_USERNAME
+- DOCKER\_HUB\_PASSWORD=`
+
+You can also export them by running `init_credentials.sh` if they are stored in
+pass under `dockerhub/username` and `dockerhub/password`.
 
 # Run
 
@@ -57,3 +90,6 @@ the [Docker Hub](TODO) using `docker login` then BLABLA
   power the CI for the Click-Count application
 
 You can also simply call `make` to deploy the entire stack.
+
+Finaly, it's possible to prefix every make rule by `docker_` to make it run
+inside the all-provisionned Docker container.

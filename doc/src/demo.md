@@ -1,9 +1,13 @@
+If you want to see the result running, it's possible, but will probably not be
+here forever since it's running on AWS with my own money.
+
 # Services
 
-- [GitLab](http://gitlab.xebia.horgix.fr)
-- [Traefik](http://traefik.xebia.horgix.fr)
-- [Mesos UI](http://cluster.xebia.horgix.fr)
-- [This documentation](http://doc.xebia.horgix.fr)
+- [Marathon](http://deploy.coffee:8080); credentials: xebia/verysecure
+- [GitLab](https://gitlab.deploy.coffee); credentials: xebia/verysecure
+- [Traefik](https://traefik.deploy.coffee)
+- [Mesos UI](https://cluster.deploy.coffee)
+- [This documentation](https://clickcount.horgix.fr)
 
 # Example run
 
