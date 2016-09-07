@@ -26,7 +26,8 @@ docker_services::
 # Better read the mkdocs on https://clickcount.horgix.fr, but here is a README,
 # just in case
 gen_readme:
-	echo '# Introduction' > README.md
+	echo -e "#**This README is a 'plain' version, you will find the real documentation in a readable format on https://clickcount.horgix.fr**\n" > README.md
+	echo -e '\n# Introduction\n' >> README.md
 	cat doc/src/index.md >> README.md
 	echo -e '\n# How To\n' >> README.md
 	cat doc/src/howto.md >> README.md

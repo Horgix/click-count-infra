@@ -1,4 +1,8 @@
+#**This README is a 'plain' version, you will find the real documentation in a readable format on https://clickcount.horgix.fr**
+
+
 # Introduction
+
 **If you want to directly jump to the "do it" part of this documentation, head
 over to the ["How To" page](howto.md).**
 
@@ -18,8 +22,8 @@ following properties:
 - Deployed with Ansible
 - Based on AWS EC2
 - Running **entirely** on Docker
-- Using Zookeeper and Mesos for resources management
-- Using Marathon to deploy and orchestrate services and the application itself
+- Using Zookeeper, Mesos and Marathon to deploy and orchestrate services and
+  the application itself
 
 The EC2 part can of course be replaced by any other IAAS provider, may it be
 public or private, admitting some adaptations.
@@ -28,17 +32,23 @@ public or private, admitting some adaptations.
 
 ## On your machine
 
+You will need the AWS key with the privilege described in the ["AWS
+side"](index.md#aws-side) part at this path : `~/.ssh/ansible-click-count.pem`
+
 The following software/modules are required to be able to use this repo:
 
 - Ansible (2.2, latest)
 - Python 2.7 (Ansible sadly doesn't work with Python 3)
 - pyapi-gitlab (python module for GitLab API)
 - boto (python module for AWS API)
-- the private ssh key with the privilege described in the "AWS side" part
+
+**If you don't want to install all of these, it's fine; there is already a
+[Docker image](https://hub.docker.com/r/horgix/ansible-aws-gitlab/) packaging
+them right there for you so just make sure you have the docker daemon running**
 
 ## AWS side
 
-Theses parts are also required on AWS side :
+Theses parts are also required on AWS side:
 
 - An AWS user with the following policies:
     - AdministratorAccess
@@ -68,15 +78,40 @@ Theses parts are also required on AWS side :
   deployed, depending on the targeted environment, on the staging and
   production nodes
 
+# How it works
+
+![Steps](images/steps.png)
+
 # How To
+
+# 4 steps to rule them all
+
+Ideally, you should be able to have the infrastructure to start building in
+5min, and totally built after 20min (15min for Ansible to run everything)
+
+- Make sure to have your AWS key in `~/.ssh/ansible-click-count.pem`
+- `source ./init_credentials.sh` or export the environment variables by hand
+- Tweak what you want in `inventory/groups_vars/all`, probably:
+    - `domain_name`
+    - `vpc_subnet_id`
+    - `vpc_id`
+- Run `make docker` ; the image pull will be long, and the Ansible run too, but
+  you should be able to grab a coffee while it runs.
 
 # Configuration
 
-## From docker or host ?
+Before taking the time to configure anything, make sure you meet the
+[requirements announced on the home page](index.md#requirements).
+
+## Using docker
+
+If you decided to use the "ansible-aws-gitlab" docker image which provides
+everything, you should be ok with the above 4 steps instructions.
 
 ## Ansible python interpreter
 
-If you're not on Archlinux, you might want to comment lines 7-8 and 22-23 in
+If you decided to run Ansible from your machine, and if you're not on
+Archlinux, you might want to comment lines 7-8 and 22-23 in
 playbooks/deploy.yml:
 
   vars:
@@ -93,9 +128,10 @@ To be able to do its job, this project require a login/password for 2 things :
 - Docker Hub
 
 You have to provide them as environment variable; the script
-`init_credentials.sh` can also be used to load them from [`pass`](TODO) (if you
-don't know what it is, I invite you to try it, it's a really simple way to
-store passwords, based on GPG, git, and tree).
+`init_credentials.sh` can also be used to load them from
+[`pass`](https://git.zx2c4.com/password-store/) (if you don't know what it is,
+I invite you to try it, it's a really simple way to store passwords, based on
+GPG, git, and tree).
 
 ### AWS
 
@@ -112,14 +148,25 @@ store passwords, based on GPG, git, and tree).
 - AWS\_SECRET\_ACCESS\_KEY
 
 You can also export them by running `init_credentials.sh` if they are stored in
-pass under `xebia/aws/ansible-key-id` and `xebia/aws/ansible-key-secret`
+pass under `xebia/aws/ansible-key-id` and `xebia/aws/ansible-key-secret`.
 
 ### Docker Hub
 
 #### Why is it needed ?
 
-The GitLab CI `build` step builds a Docker image locally and then push it to
-the [Docker Hub](TODO) using `docker login` then BLABLA
+The GitLab CI `build` step builds a Docker image locally and then pushes it to
+the [Docker Hub](https://hub.docker.com/) using `docker login` then `docker
+push`.
+
+#### What to define
+
+2 environment variable are required :
+
+- DOCKER\_HUB\_USERNAME
+- DOCKER\_HUB\_PASSWORD=`
+
+You can also export them by running `init_credentials.sh` if they are stored in
+pass under `dockerhub/username` and `dockerhub/password`.
 
 # Run
 
@@ -130,14 +177,21 @@ the [Docker Hub](TODO) using `docker login` then BLABLA
 
 You can also simply call `make` to deploy the entire stack.
 
+Finaly, it's possible to prefix every make rule by `docker_` to make it run
+inside the all-provisionned Docker container.
+
 # Demo
+
+If you want to see the result running, it's possible, but will probably not be
+here forever since it's running on AWS with my own money.
 
 # Services
 
-- [GitLab](http://gitlab.xebia.horgix.fr)
-- [Traefik](http://traefik.xebia.horgix.fr)
-- [Mesos UI](http://cluster.xebia.horgix.fr)
-- [This documentation](http://doc.xebia.horgix.fr)
+- [Marathon](http://deploy.coffee:8080); credentials: xebia/verysecure
+- [GitLab](https://gitlab.deploy.coffee); credentials: xebia/verysecure
+- [Traefik](https://traefik.deploy.coffee)
+- [Mesos UI](https://cluster.deploy.coffee)
+- [This documentation](https://clickcount.horgix.fr)
 
 # Example run
 
@@ -460,13 +514,13 @@ make  51.26s user 8.01s system 8% cpu 12:03.27 total
 lot of improvements. This is a list of some ideas that could be implemented
 with a bit more time and depending on the needs.**
 
-# Zookeeper IDs
+## Zookeeper IDs
 
 Currently, Zookeeper IDs are taken from the tag `zkid` on the instances, which
 will be kind of a pain to handle if we introduce autoscaling of the
 infrastructure. It would be better if each Zookeeper could discover its ID.
 
-# Gitlab Container Registry
+## Gitlab Container Registry
 
 Since the [8.8
 release](https://about.gitlab.com/2016/05/23/gitlab-container-registry/),
@@ -474,7 +528,7 @@ GitLab can provide a Docker private registry. It would be really nice to use
 it; however, it has not been integrated in this project/demo, as it requires
 passing SSL certificates to it, which are currently only known to Traefik.
 
-# GitLab Runner health checks
+## GitLab Runner health checks
 
 Currently, there is no health checks on Marathon side for GitLab runners.
 Since they don't listen for connections and directly connect to GitLab, there
@@ -482,13 +536,13 @@ is no easy way to check for its aliveness; something based on the health check
 type "command" which would hit GitLab API to detect if the runners is
 referenced as active or not would be possible, but currently not implemented.
 
-# Docker images based on Alpine
+## Docker images based on Alpine
 
 Currently, this project is using the most possible "standard" images, mainly
 just using the "latest" tag. Reducing the global size of containers using ones
 based on Alpine would be nice, but would maybe have to be benchmarked before.
 
-# Rolling upgrade without service interruption
+## Rolling upgrade without service interruption
 
 Currently, if we try to run the app with less than 300MB of memory, it simply
 ends up being killed by the oom killer:
@@ -517,17 +571,17 @@ risk of anyway having one or both instances of the application killed by the
 oom killer. The best case, of course, would be to run on something better than
 t2.micro instances, or having more of them.
 
-# GitLab Runners autoscaling and deregistering
+## GitLab Runners autoscaling and deregistering
 
-TODO
+Currently not implemented but would be nice to have.
 
-# Contribute a Marathon Ansible module
+## Contribute a Marathon Ansible module
 
 The lack of an Ansible module dedicated to running Marathon applications forces
 to use the `uri` module. It would be better and cleaner to have a dedicated
 module for Ansible, which could probably be created easily.
 
-# Tailor needed AWS key policies
+## Tailor needed AWS key policies
 
 Currently, the required policies listed for the AWS user are the following :
 
@@ -537,31 +591,37 @@ Currently, the required policies listed for the AWS user are the following :
 
 It could probably be restricted a bit more.
 
-# Improve security groups
+## Improve security groups
 
-- 80
-- 2888
-- 8080
-- 31000 - 32000
-- 5050
-- 22
-- 3888
-- 2181
-- 443
+Currently, the security groups are probably the worst part of this project.
+The one created by Ansible allow everything, both inbound and outbound.
+
+I had a first try with the following opened ports, but still had issues with
+Zookeeper so I postponed that to focus on the rest of this project.
+
+- 80 / 443 : HTTP(S)
+- 2888 / 3888 / 2181 : Zookeeper
+- 8080 : Marathon
+- 31000 - 32000 : Mesos Docker containers
+- 5050 : Mesos
+- 22 : SSH
 - ICMP
 
-# Auto accept host ecdsa keys / host key checking
+## Discover host keys
 
+Currently, the host key checking is disabled in Ansible's configuration to
+allow running on newly spawned instances without having to confirm anything. It
+would be better to discover these keys.
 
-
-# Work without Route 53
+## Work without Route 53
 
 To allow people to test this infrastructure more easily, it would be nice if it
 didn't depend on some of the records like `gitlab.<domain>`.
 
-# Run Traefik on each node
+## Tests...
 
-# Tests...
+A real test step in the CI Pipeline would be a must have in a real usecase,
+since until know I focused on the delivery part.
 
 # Fun parts
 
@@ -667,17 +727,11 @@ I think I might submit a PR on the documentation to add this point.
 
 # GitLab CI runner token
 
-need a token, how to register ? Again, badly documented.
-Need to discover runners. End up hitting the API
+GitLab CI Runners need a token to register themselves on GitLab. However, there
+is absolutely no way to discover this token, so I ended up doing it through the
+GitLab API and then feeding it by environment variables to the GitLab Runner
+Docker image.
 
-Heureusement, le gitlab runner est en go et sait parser sa conf depuis l'env...
-juste à automatiser le register à la création :)
-
-# Pass files to docker inside runners
-
-The volume is from the host ! BUild dir, etc
-
-# Undocumented meta refresh_inventory
-
-# Ansible's gitlab_user module is bugged :(
-
+The Docker image is also not made for autoregistering so I quickly [implemented
+it](https://github.com/Horgix/dockerfiles/tree/master/gitlab-runner) and will
+probably suggest it as an improvement to the official gitlab-runner image.

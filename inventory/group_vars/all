@@ -1,4 +1,4 @@
-domain_name:        "xebia.horgix.fr"
+domain_name:        "deploy.coffee"
 instance_hostname:  "{{ ec2_tag_Name }}.host.{{ domain_name }}"
 vpc_subnet_id:      "subnet-3adebc5e"
 vpc_id:             "vpc-ab1595cf"
