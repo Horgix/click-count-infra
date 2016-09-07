@@ -1,7 +1,8 @@
-# 4 steps to rule them all
+# 5 steps to rule them all
 
 Ideally, you should be able to have the infrastructure to start building in
-5min, and totally built after 20min (15min for Ansible to run everything)
+15min (including 10min of Docker building), and totally built after 20min
+(15min for Ansible to run everything).
 
 - Make sure to have your AWS key in `~/.ssh/ansible-click-count.pem`
 - `source ./init_credentials.sh` or export the environment variables by hand
@@ -9,8 +10,10 @@ Ideally, you should be able to have the infrastructure to start building in
     - `domain_name`
     - `vpc_subnet_id`
     - `vpc_id`
-- Run `make docker` ; the image pull will be long, and the Ansible run too, but
-  you should be able to grab a coffee while it runs.
+- Run `docker build -t horgix/ansible-aws-gitlab . ` to build the image with
+  the latest version of Ansible and the required libraries
+- Run `make docker` ; the Ansible run will be long too, but you should be able
+  to grab a coffee while it runs.
 
 # Configuration
 

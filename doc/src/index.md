@@ -38,8 +38,9 @@ The following software/modules are required to be able to use this repo:
 - boto (python module for AWS API)
 
 **If you don't want to install all of these, it's fine; there is already a
-[Docker image](https://hub.docker.com/r/horgix/ansible-aws-gitlab/) packaging
-them right there for you so just make sure you have the docker daemon running**
+Dockerfile packaging them right there for you so just make sure you have the
+docker daemon running and run `docker build -t horgix/ansible-aws-gitlab . ` at
+the root of this repository**.
 
 ## AWS side
 
