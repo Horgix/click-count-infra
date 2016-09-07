@@ -17,4 +17,6 @@ RUN useradd build \
   && cd ansible-git \
   && sudo -u build makepkg -sri --noconfirm
 
+RUN ln -s /usr/bin/python2 /usr/bin/python
+
 CMD ansible
