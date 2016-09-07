@@ -1,5 +1,5 @@
-This project has been really fun, and I thought I would detail some of the
-surprising and intersting points I encountered during this week.
+This project was really fun, and I thought I would detail some of the
+surprising and interesting points I encountered during this week.
 
 # Zookeeper SERVERS
 
@@ -8,13 +8,13 @@ image](https://hub.docker.com/r/mesoscloud/zookeeper/), I originally used
 hardcoded IP to configure Zookeeper with the list of its nodes.
 
 The zookeeper image can indeed be configured at runtime with the "SERVERS"
-environment variable, under the following form :
+environment variable, under the following form:
 
     SERVERS=first_node_ip,second_node_ip,third_node_ip
 
 Obviously, since this approach is absolutely neither flexible nor scalable, I
 then decided to use the dynamic inventory from EC2 to populate this list of
-servers, which looks like that in Jinja :
+servers, which looks like that in Jinja:
 
     zk_nodes: "{% for host in groups['ec2'] %}{{ hostvars[host]['ec2_private_ip_address'] }}{% if not loop.last %},{% endif %}{% endfor %}"
 
@@ -36,13 +36,13 @@ The following parts are what interests us :
 
     echo "${MYID:-1}" > /tmp/zookeeper/myid
 
-It just fill a file with the Zookeeper ID, everything good here. Then, a few
-lines later:
+It just fills a file with the Zookeeper ID, everything looks good here. Then, a
+few lines later:
 
     printf '%s' "$SERVERS" | awk 'BEGIN { RS = "," }; { printf "server.%i=%s:2888:3888\n", NR, $0 }' >> /opt/zookeeper/conf/zoo.cfg
 
-The important part here is the `server.%i`, with increment at each node in the
-list.
+The important part here is the `server.%i`, which increments at each node in
+the list.
 
 So, this environment variable:
 
@@ -53,6 +53,13 @@ is transformed into this configuration :
     server.1=first_node_ip
     server.2=second_node_ip
     server.3=third_node_ip
+
+And the `X` in `server.X` is assumed to be the node ID. But since their ID is
+set by the `zkid` tag, when using a dynamic inventory it probably won't build
+the list in the increasing order of your ID !
+
+So at the end I just ended up tweaking the entrypoint to give couples of ID/IP
+as SERVERS.
 
 # GitLab first login automation
 
@@ -88,6 +95,8 @@ for the code :
     else
       user_args[:password] = ENV['GITLAB_ROOT_PASSWORD']
     end
+
+I think I might submit a PR on the documentation to add this point.
 
 # GitLab CI runner token
 

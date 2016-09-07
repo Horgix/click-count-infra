@@ -18,9 +18,9 @@ passing SSL certificates to it, which are currently only known to Traefik.
 
 # GitLab Runner health checks
 
-Currently, there is no health chekcs on Marathon side for GitLab runners.
+Currently, there is no health checks on Marathon side for GitLab runners.
 Since they don't listen for connections and directly connect to GitLab, there
-is no real way to check for its aliveness; something based on the health check
+is no easy way to check for its aliveness; something based on the health check
 type "command" which would hit GitLab API to detect if the runners is
 referenced as active or not would be possible, but currently not implemented.
 
@@ -30,19 +30,10 @@ Currently, this project is using the most possible "standard" images, mainly
 just using the "latest" tag. Reducing the global size of containers using ones
 based on Alpine would be nice, but would maybe have to be benchmarked before.
 
-# Make marathon json artifacts
-
-GitLab CI knows [how to store build
-artifacts](http://docs.gitlab.com/ce/user/project/builds/artifacts.html). The
-main artifact currently is the Docker image built from the source code, which
-is already sent to the Docker Hub. Storing the generated
-`marathon_app_staging.json` and `marathon_app_production.json` would make
-sense.
-
 # Rolling upgrade without service interruption
 
-Currently, if we try to run the app with less than 300MB, it simply ends up
-behind killed by the oom killer:
+Currently, if we try to run the app with less than 300MB of memory, it simply
+ends up being killed by the oom killer:
 
     $ docker run -it --rm -m 200m horgix/click-count
     $ dmesg
@@ -55,29 +46,61 @@ Furthermore, the t2.micro EC2 are given "0.5GB" of memory, actually reported as
 So, at the end, it's impossible to have 2 instances of the click-count
 application running side by side on the same t2.micro instance.
 
-So we have 2 solutions to allow Marathon to update the application :
+So we have 2 solutions to allow Marathon to update the application:
 
-1. Set the "minimumHealthCapacity" to 0, allowing Marathon to completely
+1. Set the `minimumHealthCapacity` to 0, allowing Marathon to completely
    shutdown the "old" application before starting the new one
-2. Set the "mem" resource limitation to 0, asking Mesos to not limit the memory
+2. Set the `mem` resource limitation to 0, asking Mesos to not limit the memory
    used by the running container, which will allow it to make offers to
    Marathon so it could do a proper rolling upgrade
 
 The first solution has been chosen, since the second one would introduce the
 risk of anyway having one or both instances of the application killed by the
 oom killer. The best case, of course, would be to run on something better than
-t2.micro instance, or having more of them.
+t2.micro instances, or having more of them.
 
-# GitLab Runners unregistering
+# GitLab Runners autoscaling and deregistering
+
+TODO
 
 # Contribute a Marathon Ansible module
 
+The lack of an Ansible module dedicated to running Marathon applications forces
+to use the `uri` module. It would be better and cleaner to have a dedicated
+module for Ansible, which could probably be created easily.
+
 # Tailor needed AWS key policies
+
+Currently, the required policies listed for the AWS user are the following :
+
+- AdministratorAccess
+- AmazonEC2FullAccess
+- AmazonRoute53FullAccess
+
+It could probably be restricted a bit more.
 
 # Improve security groups
 
-# Auto accept host ecdsa keys ?
+- 80
+- 2888
+- 8080
+- 31000 - 32000
+- 5050
+- 22
+- 3888
+- 2181
+- 443
+- ICMP
 
-## Work without Route 53
+# Auto accept host ecdsa keys / host key checking
 
-## Run Traefik on each node
+
+
+# Work without Route 53
+
+To allow people to test this infrastructure more easily, it would be nice if it
+didn't depend on some of the records like `gitlab.<domain>`.
+
+# Run Traefik on each node
+
+# Tests...

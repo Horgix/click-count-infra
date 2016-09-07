@@ -21,7 +21,7 @@ following properties:
 - Using Marathon to deploy and orchestrate services and the application itself
 
 The EC2 part can of course be replaced by any other IAAS provider, may it be
-public or private.
+public or private, admitting some adaptations.
 
 # Requirements
 
@@ -58,31 +58,11 @@ Theses parts are also required on AWS side :
     - Mesos Slave
     - Mesos Master
     - Marathon
-- The "services" node also runs the following services as marathon apps:
+- The "services" node also runs the following services as Marathon apps:
     - [GitLab](https://about.gitlab.com/)
     - a [GitLab CI runner](https://gitlab.com/gitlab-org/gitlab-ci-multi-runner)
     - [Traefik](http://traefik.io/)
     - a pretty [alternative Mesos UI](https://github.com/Capgemini/mesos-ui/)
-- The application [click-count](TODO) is deployed, depending on the targeted
-  environment, on the staging and production nodes
-
-# Demo
-
-- [GitLab](http://gitlab.xebia.horgix.fr)
-- [Traefik](http://traefik.xebia.horgix.fr)
-- [Mesos UI](http://cluster.xebia.horgix.fr)
-- [This documentation](http://doc.xebia.horgix.fr)
-
-## Screenshots
-
-### Mesos Dashboard
-
-![Mesos Dashboard](images/mesos_dashboard.png)
-
-### Mesos Nodes
-
-![Mesos Nodes](images/mesos_nodes.png)
-
-### Mesos Tasks
-
-![Mesos Tasks](images/mesos_tasks.png)
+- The application [click-count](https://github.com/Horgix/click-count-app) is
+  deployed, depending on the targeted environment, on the staging and
+  production nodes
