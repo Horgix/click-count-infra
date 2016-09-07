@@ -19,7 +19,7 @@ docker_base::
 services::
 	ansible-playbook playbooks/master.yml -b -t services
 docker_services::
-	ansible-playbook playbooks/master.yml -b -t services
+	${DOCKERCMD} ansible-playbook playbooks/master.yml -b -t services
 
 .SILENT: gen_readme
 
