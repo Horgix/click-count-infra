@@ -31,7 +31,7 @@
     name:             click-count
     group:            xebiafr
     description:      Click Count application
-    import_url:       "https://Horgix@bitbucket.org/Horgix/xebia-app.git"
+    import_url:       "https://github.com/Horgix/click-count-app.git"
     state:            present
 
 - name: "Set variables"
