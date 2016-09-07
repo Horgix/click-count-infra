@@ -33,7 +33,7 @@
     HEADER_Content-Type:  "application/json"
 
 - name: "Wait for GitLab to come up"
-  shell: curl -L --silent http://gitlab.{{ domain_name }}/
+  shell: curl -L --silent {{ gitlab.endpoint }}/
   register: gitlab_status
   until: gitlab_status.stdout.find("GitLab Community Edition") != -1
   retries: 20

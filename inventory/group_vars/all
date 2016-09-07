@@ -2,6 +2,7 @@ domain_name:        "xebia.horgix.fr"
 instance_hostname:  "{{ ec2_tag_Name }}.host.{{ domain_name }}"
 vpc_subnet_id:      "subnet-3adebc5e"
 vpc_id:             "vpc-ab1595cf"
+https:              True
 
 required_instances:
   - type: m4.large
@@ -21,12 +22,13 @@ required_instances:
       zkid: 3
 
 gitlab:
-  root_password:  verysecure2
-  xebia_password: verysecure2
+  root_password:  verysecure
+  xebia_password: verysecure
+  endpoint:       "http{% if https %}s{% endif %}://gitlab.{{ domain_name }}"
 
 marathon:
-  username: pony
-  password: unicorns
+  username: xebia
+  password: verysecure
   endpoint: "http://{{ domain_name }}:8080"
 
 docker_hub:

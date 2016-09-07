@@ -53,7 +53,7 @@ logLevel = "DEBUG"
 # Optional
 # Default: ["http"]
 #
-defaultEntryPoints = ["http"] # , "https"]
+defaultEntryPoints = ["http"{% if https %}, "https"{% endif %}]
 
 # Enable ACME (Let's Encrypt): automatic SSL
 #
@@ -79,7 +79,7 @@ storageFile = "acme.json"
 #
 # Required
 #
-entryPoint = "http"
+entryPoint = "https"
 
 # Enable on demand certificate. This will request a certificate from Let's Encrypt during the first TLS handshake for a hostname that does not yet have a certificate.
 # WARNING, TLS handshakes will be slow when requesting a hostname certificate for the first time, this can leads to DoS attacks.
@@ -124,14 +124,16 @@ onDemand = true
 [entryPoints]
   [entryPoints.http]
   address = ":80"
-  #   [entryPoints.http.redirect]
-  #     entryPoint = "https"
-  # [entryPoints.https]
-  # address = ":443"
-  #  [entryPoints.https.tls]
-    #  [[entryPoints.https.tls.certificates]]
-    #    certFile = "tests/traefik.crt"
-    #    keyFile = "tests/traefik.key"
+{% if https %}
+    [entryPoints.http.redirect]
+      entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+   [entryPoints.https.tls]
+{% endif %}
+#     [[entryPoints.https.tls.certificates]]
+#       certFile = "tests/traefik.crt"
+#       keyFile = "tests/traefik.key"
 #       CertFile = "integration/fixtures/https/snitest.com.cert"
 #       KeyFile = "integration/fixtures/https/snitest.com.key"
 #       [[entryPoints.https.tls.certificates]]

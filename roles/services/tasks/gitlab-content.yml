@@ -2,7 +2,7 @@
 - name: "Create Gitlab Group"
   delegate_to: 127.0.0.1
   gitlab_group:
-    server_url:       "http://gitlab.{{ domain_name }}"
+    server_url:       "{{ gitlab.endpoint }}"
     #validate_certs:   true
     login_token:      "{{ gitlab_private_token }}"
     name:             xebiafr
@@ -11,7 +11,7 @@
 - name: "Create Gitlab User"
   delegate_to: 127.0.0.1
   gitlab_user:
-    server_url:       "http://gitlab.{{ domain_name }}"
+    server_url:       "{{ gitlab.endpoint }}"
     #validate_certs:   true
     login_token:      "{{ gitlab_private_token }}"
     name:             Xebia Interview
@@ -25,7 +25,7 @@
 - name: "Create Gitlab Project"
   delegate_to: 127.0.0.1
   gitlab_project:
-    server_url:       "http://gitlab.{{ domain_name }}"
+    server_url:       "{{ gitlab.endpoint }}"
     #validate_certs:   true
     login_token:      "{{ gitlab_private_token }}"
     name:             click-count
@@ -36,12 +36,12 @@
 
 - name: "Set variables"
   uri:
-    url:          "http://gitlab.{{ domain_name }}/api/v3/projects/xebiafr%2Fclick-count/variables"
+    url:          "{{ gitlab.endpoint }}/api/v3/projects/xebiafr%2Fclick-count/variables"
     method:       POST
     body:         "{{ item }}"
     status_code:  "200,201,400"
-    HEADER_Content-Type: "application/x-www-form-urlencoded"
-    HEADER_PRIVATE-TOKEN:  "{{ gitlab_private_token }}"
+    HEADER_Content-Type:  "application/x-www-form-urlencoded"
+    HEADER_PRIVATE-TOKEN: "{{ gitlab_private_token }}"
   with_items:
     - "key=HUB_LOGIN&value={{ docker_hub.username }}"
     - "key=HUB_PASSWORD&value={{ docker_hub.password }}"

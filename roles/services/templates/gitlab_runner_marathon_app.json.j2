@@ -30,7 +30,7 @@
     }
   },
   "env": {
-    "CI_SERVER_URL":       "http://gitlab.{{ domain_name }}/ci",
+    "CI_SERVER_URL":       "{{ gitlab.endpoint }}/ci",
     "REGISTRATION_TOKEN":  "{{ gitlab_runners_token }}",
     "RUNNER_NAME":         "FirstRunner",
     "RUNNER_TAG_LIST":     "docker",
