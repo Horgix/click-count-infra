@@ -2,13 +2,11 @@ FROM base/archlinux
 
 RUN pacman --noconfirm -Sy archlinux-keyring \
       && pacman --noconfirm -Syu \
-      && pacman-db-upgrade \
-      && pacman -Sc
+      && pacman-db-upgrade
 
 RUN pacman -S --noconfirm ca-certificates-mozilla
-RUN pacman -S --noconfirm ansible python2-pip \
-      && pip2 install pyapi-gitlab boto
-
-RUN pacman -S --noconfirm openssh
+RUN pacman -S --noconfirm ansible python2-pip openssh \
+      && pip2 install pyapi-gitlab boto \
+      && pacman -Sc
 
 CMD ansible
